@@ -83,7 +83,7 @@ module Covid19VCI
             warning { assert resource.text.nil?, "#{resource.resourceType} resource should not have a 'text' element" }
           end
 
-          walk_resource(resource) do |value, meta, path|
+          resource.each_element(resource) do |value, meta, path|
             case meta['type']
             when 'CodeableConcept'
               warning { assert value.text.nil?, "#{resource.resourceType} should not have a #{path}.text element" }

@@ -9,7 +9,7 @@ development:
 
 production:
   adapter: sqlite
-  database: ':memory:'
+  database: data/inferno_production.db
   max_connections: 10
 
 test:
