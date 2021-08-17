@@ -6,12 +6,15 @@ RSpec.describe Covid19VCI::FileDownload do
   end
   let(:request_repo) { Inferno::Repositories::Requests.new }
   let(:group) { suite.groups.first }
+  let(:session_data_repo) { Inferno::Repositories::SessionData.new }
 
   def run(runnable, inputs = {})
     test_run_params = { test_session_id: test_session.id }.merge(runnable.reference_hash)
     test_run = Inferno::Repositories::TestRuns.new.create(test_run_params)
-    Inferno::TestRunner.new(test_session: test_session, test_run: test_run).run(runnable, inputs)
-    Inferno::Repositories::TestRuns.new.results_for_test_run(test_run.id)
+    inputs.each do |name, value|
+      session_data_repo.save(test_session_id: test_session.id, name: name, value: value)
+    end
+    Inferno::TestRunner.new(test_session: test_session, test_run: test_run).run(runnable)
   end
 
   describe 'vci-file-01' do
@@ -23,7 +26,7 @@ RSpec.describe Covid19VCI::FileDownload do
         stub_request(:get, url)
           .to_return(status: 200, body: { abc: 'def' }.to_json)
 
-      result = run(test, { file_download_url: url }).first
+      result = run(test, { file_download_url: url })
 
       expect(stubbed_request).to have_been_made.once
       expect(result.result).to eq('pass')
@@ -34,7 +37,7 @@ RSpec.describe Covid19VCI::FileDownload do
         stub_request(:get, url)
           .to_return(status: 500, body: { abc: 'def' }.to_json)
 
-      result = run(test, { file_download_url: url }).first
+      result = run(test, { file_download_url: url })
 
       expect(stubbed_request).to have_been_made.once
       expect(result.result).to eq('fail')
@@ -46,7 +49,7 @@ RSpec.describe Covid19VCI::FileDownload do
         stub_request(:get, url)
           .to_return(status: 200, body: 'def')
 
-      result = run(test, { file_download_url: url }).first
+      result = run(test, { file_download_url: url })
 
       expect(stubbed_request).to have_been_made.once
       expect(result.result).to eq('fail')
@@ -65,13 +68,13 @@ RSpec.describe Covid19VCI::FileDownload do
         test_session_id: test_session.id
       )
 
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('pass')
     end
 
     it 'errors if the vci_file_download request has not been made' do
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('error')
       expect(result.result_message).to match(/vci_file_download/)
@@ -83,7 +86,7 @@ RSpec.describe Covid19VCI::FileDownload do
         name: :vci_file_download,
         test_session_id: test_session.id
       )
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('skip')
     end
@@ -96,7 +99,7 @@ RSpec.describe Covid19VCI::FileDownload do
         test_session_id: test_session.id
       )
 
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('fail')
       expect(result.result_message).to match(/Content-Type/)
@@ -109,7 +112,7 @@ RSpec.describe Covid19VCI::FileDownload do
         test_session_id: test_session.id
       )
 
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('fail')
       expect(result.result_message).to match(/did not include/)
@@ -127,13 +130,13 @@ RSpec.describe Covid19VCI::FileDownload do
         test_session_id: test_session.id
       )
 
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('pass')
     end
 
     it 'errors if the vci_file_download request has not been made' do
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('error')
       expect(result.result_message).to match(/vci_file_download/)
@@ -145,7 +148,7 @@ RSpec.describe Covid19VCI::FileDownload do
         name: :vci_file_download,
         test_session_id: test_session.id
       )
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('skip')
     end
@@ -162,7 +165,7 @@ RSpec.describe Covid19VCI::FileDownload do
           test_session_id: test_session.id
         )
 
-        result = run(test).first
+        result = run(test)
 
         expect(result.result).to eq('pass')
       end
@@ -174,7 +177,7 @@ RSpec.describe Covid19VCI::FileDownload do
           name: :vci_file_download,
           test_session_id: test_session.id
         )
-        result = run(test).first
+        result = run(test)
 
         expect(result.result).to eq('fail')
       end
@@ -188,7 +191,7 @@ RSpec.describe Covid19VCI::FileDownload do
           test_session_id: test_session.id
         )
 
-        result = run(test).first
+        result = run(test)
 
         expect(result.result).to eq('fail')
         expect(result.result_message).to match(/should be downloaded/)
@@ -202,7 +205,7 @@ RSpec.describe Covid19VCI::FileDownload do
           name: :vci_file_download,
           test_session_id: test_session.id
         )
-        result = run(test).first
+        result = run(test)
 
         expect(result.result).to eq('fail')
         expect(result.result_message).to match(/extension/)
@@ -221,13 +224,13 @@ RSpec.describe Covid19VCI::FileDownload do
         test_session_id: test_session.id
       )
 
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('pass')
     end
 
     it 'errors if the vci_file_download request has not been made' do
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('error')
       expect(result.result_message).to match(/vci_file_download/)
@@ -239,7 +242,7 @@ RSpec.describe Covid19VCI::FileDownload do
         name: :vci_file_download,
         test_session_id: test_session.id
       )
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('skip')
     end
@@ -252,7 +255,7 @@ RSpec.describe Covid19VCI::FileDownload do
         test_session_id: test_session.id
       )
 
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('fail')
       expect(result.result_message).to match(/does not contain/)
@@ -266,7 +269,7 @@ RSpec.describe Covid19VCI::FileDownload do
         test_session_id: test_session.id
       )
 
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('fail')
       expect(result.result_message).to match(/must contain an Array/)
@@ -280,7 +283,7 @@ RSpec.describe Covid19VCI::FileDownload do
         test_session_id: test_session.id
       )
 
-      result = run(test).first
+      result = run(test)
 
       expect(result.result).to eq('fail')
       expect(result.result_message).to match(/at least one/)
