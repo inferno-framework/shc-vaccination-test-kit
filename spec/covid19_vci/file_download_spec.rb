@@ -12,7 +12,7 @@ RSpec.describe Covid19VCI::FileDownload do
     test_run_params = { test_session_id: test_session.id }.merge(runnable.reference_hash)
     test_run = Inferno::Repositories::TestRuns.new.create(test_run_params)
     inputs.each do |name, value|
-      session_data_repo.save(test_session_id: test_session.id, name: name, value: value)
+      session_data_repo.save(test_session_id: test_session.id, name: name, value: value, type: 'text')
     end
     Inferno::TestRunner.new(test_session: test_session, test_run: test_run).run(runnable)
   end
@@ -65,7 +65,11 @@ RSpec.describe Covid19VCI::FileDownload do
         status: 200,
         response_headers: [{ name: 'content-type', value: 'application/smart-health-card' }],
         name: :vci_file_download,
-        test_session_id: test_session.id
+        verb: 'get',
+        direction: 'outgoing',
+        test_session_id: test_session.id,
+        result_id: repo_create(:result).id,
+        url: 'http://example.com/hc'
       )
 
       result = run(test)
@@ -84,7 +88,11 @@ RSpec.describe Covid19VCI::FileDownload do
       request_repo.create(
         status: 500,
         name: :vci_file_download,
-        test_session_id: test_session.id
+        verb: 'get',
+        direction: 'outgoing',
+        test_session_id: test_session.id,
+        result_id: repo_create(:result).id,
+        url: 'http://example.com/hc'
       )
       result = run(test)
 
@@ -96,7 +104,11 @@ RSpec.describe Covid19VCI::FileDownload do
         status: 200,
         response_headers: [{ name: 'content-type', value: 'application/json' }],
         name: :vci_file_download,
-        test_session_id: test_session.id
+        verb: 'get',
+        direction: 'outgoing',
+        test_session_id: test_session.id,
+        result_id: repo_create(:result).id,
+        url: 'http://example.com/hc'
       )
 
       result = run(test)
@@ -109,7 +121,11 @@ RSpec.describe Covid19VCI::FileDownload do
       request_repo.create(
         status: 200,
         name: :vci_file_download,
-        test_session_id: test_session.id
+        verb: 'get',
+        direction: 'outgoing',
+        test_session_id: test_session.id,
+        result_id: repo_create(:result).id,
+        url: 'http://example.com/hc'
       )
 
       result = run(test)
@@ -127,7 +143,10 @@ RSpec.describe Covid19VCI::FileDownload do
         status: 200,
         url: 'http://example.com/hc.smart-health-card',
         name: :vci_file_download,
-        test_session_id: test_session.id
+        verb: 'get',
+        direction: 'outgoing',
+        test_session_id: test_session.id,
+        result_id: repo_create(:result).id
       )
 
       result = run(test)
@@ -146,7 +165,11 @@ RSpec.describe Covid19VCI::FileDownload do
       request_repo.create(
         status: 500,
         name: :vci_file_download,
-        test_session_id: test_session.id
+        verb: 'get',
+        direction: 'outgoing',
+        test_session_id: test_session.id,
+        result_id: repo_create(:result).id,
+        url: 'http://example.com/hc'
       )
       result = run(test)
 
@@ -162,7 +185,10 @@ RSpec.describe Covid19VCI::FileDownload do
           url: url,
           response_headers: [{ name: 'content-disposition', value: 'attachment; filename="hc.smart-health-card"' }],
           name: :vci_file_download,
-          test_session_id: test_session.id
+          verb: 'get',
+          direction: 'outgoing',
+          test_session_id: test_session.id,
+          result_id: repo_create(:result).id
         )
 
         result = run(test)
@@ -175,7 +201,10 @@ RSpec.describe Covid19VCI::FileDownload do
           status: 200,
           url: url,
           name: :vci_file_download,
-          test_session_id: test_session.id
+          verb: 'get',
+          direction: 'outgoing',
+          test_session_id: test_session.id,
+          result_id: repo_create(:result).id
         )
         result = run(test)
 
@@ -188,7 +217,10 @@ RSpec.describe Covid19VCI::FileDownload do
           url: url,
           response_headers: [{ name: 'content-disposition', value: 'inline' }],
           name: :vci_file_download,
-          test_session_id: test_session.id
+          verb: 'get',
+          direction: 'outgoing',
+          test_session_id: test_session.id,
+          result_id: repo_create(:result).id
         )
 
         result = run(test)
@@ -203,7 +235,10 @@ RSpec.describe Covid19VCI::FileDownload do
           url: url,
           response_headers: [{ name: 'content-disposition', value: 'attachment; filename="hc.health-card"' }],
           name: :vci_file_download,
-          test_session_id: test_session.id
+          verb: 'get',
+          direction: 'outgoing',
+          test_session_id: test_session.id,
+          result_id: repo_create(:result).id
         )
         result = run(test)
 
@@ -221,7 +256,11 @@ RSpec.describe Covid19VCI::FileDownload do
         status: 200,
         response_body: { 'verifiableCredential' => ['abc'] }.to_json,
         name: :vci_file_download,
-        test_session_id: test_session.id
+        verb: 'get',
+        direction: 'outgoing',
+        test_session_id: test_session.id,
+        result_id: repo_create(:result).id,
+        url: 'http://example.com/hc'
       )
 
       result = run(test)
@@ -240,7 +279,11 @@ RSpec.describe Covid19VCI::FileDownload do
       request_repo.create(
         status: 500,
         name: :vci_file_download,
-        test_session_id: test_session.id
+        verb: 'get',
+        direction: 'outgoing',
+        test_session_id: test_session.id,
+        result_id: repo_create(:result).id,
+        url: 'http://example.com/hc'
       )
       result = run(test)
 
@@ -252,7 +295,11 @@ RSpec.describe Covid19VCI::FileDownload do
         status: 200,
         response_body: {}.to_json,
         name: :vci_file_download,
-        test_session_id: test_session.id
+        verb: 'get',
+        direction: 'outgoing',
+        test_session_id: test_session.id,
+        result_id: repo_create(:result).id,
+        url: 'http://example.com/hc'
       )
 
       result = run(test)
@@ -266,7 +313,11 @@ RSpec.describe Covid19VCI::FileDownload do
         status: 200,
         response_body: { 'verifiableCredential' => 'abc' }.to_json,
         name: :vci_file_download,
-        test_session_id: test_session.id
+        verb: 'get',
+        direction: 'outgoing',
+        test_session_id: test_session.id,
+        result_id: repo_create(:result).id,
+        url: 'http://example.com/hc'
       )
 
       result = run(test)
@@ -280,7 +331,11 @@ RSpec.describe Covid19VCI::FileDownload do
         status: 200,
         response_body: { 'verifiableCredential' => [] }.to_json,
         name: :vci_file_download,
-        test_session_id: test_session.id
+        verb: 'get',
+        direction: 'outgoing',
+        test_session_id: test_session.id,
+        result_id: repo_create(:result).id,
+        url: 'http://example.com/hc'
       )
 
       result = run(test)
