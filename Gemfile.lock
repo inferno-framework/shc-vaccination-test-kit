@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    shc_vaccination_test_kit (0.0.2)
+    shc_vaccination_test_kit (0.1.0)
       health_cards
       inferno_core (>= 0.4.2)
 
@@ -134,7 +134,7 @@ GEM
       dry-transformer (~> 0.1)
     hansi (0.2.1)
     hashdiff (1.0.1)
-    health_cards (1.0.0)
+    health_cards (1.1.0)
       fhir_models (>= 4.0.0)
       rqrcode
       rqrcode_core (>= 1.2.0)
@@ -215,7 +215,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.2.5)
-    rqrcode (2.1.0)
+    rqrcode (2.1.2)
       chunky_png (~> 1.0)
       rqrcode_core (~> 1.0)
     rqrcode_core (1.2.0)
