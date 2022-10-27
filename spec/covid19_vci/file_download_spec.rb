@@ -77,10 +77,10 @@ RSpec.describe Covid19VCI::FileDownload do
       expect(result.result).to eq('pass')
     end
 
-    it 'errors if the vci_file_download request has not been made' do
+    it 'skips if the vci_file_download request has not been made' do
       result = run(test)
 
-      expect(result.result).to eq('error')
+      expect(result.result).to eq('skip')
       expect(result.result_message).to match(/vci_file_download/)
     end
 
@@ -154,10 +154,10 @@ RSpec.describe Covid19VCI::FileDownload do
       expect(result.result).to eq('pass')
     end
 
-    it 'errors if the vci_file_download request has not been made' do
+    it 'skips if the vci_file_download request has not been made' do
       result = run(test)
 
-      expect(result.result).to eq('error')
+      expect(result.result).to eq('skip')
       expect(result.result_message).to match(/vci_file_download/)
     end
 
@@ -268,10 +268,10 @@ RSpec.describe Covid19VCI::FileDownload do
       expect(result.result).to eq('pass')
     end
 
-    it 'errors if the vci_file_download request has not been made' do
+    it 'skips if the vci_file_download request has not been made' do
       result = run(test)
 
-      expect(result.result).to eq('error')
+      expect(result.result).to eq('skip')
       expect(result.result_message).to match(/vci_file_download/)
     end
 
