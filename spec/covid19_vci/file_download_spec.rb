@@ -59,6 +59,7 @@ RSpec.describe Covid19VCI::FileDownload do
 
   describe 'vci-file-02' do
     let(:test) { group.tests[1] }
+    let(:url) { 'http://example.com/hc' }
 
     it 'passes if the response has the correct Content-Type header' do
       request_repo.create(
@@ -72,13 +73,13 @@ RSpec.describe Covid19VCI::FileDownload do
         url: 'http://example.com/hc'
       )
 
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('pass')
     end
 
     it 'skips if the vci_file_download request has not been made' do
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('skip')
       expect(result.result_message).to match(/vci_file_download/)
@@ -94,7 +95,7 @@ RSpec.describe Covid19VCI::FileDownload do
         result_id: repo_create(:result).id,
         url: 'http://example.com/hc'
       )
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('skip')
     end
@@ -111,7 +112,7 @@ RSpec.describe Covid19VCI::FileDownload do
         url: 'http://example.com/hc'
       )
 
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('fail')
       expect(result.result_message).to match(/Content-Type/)
@@ -128,7 +129,7 @@ RSpec.describe Covid19VCI::FileDownload do
         url: 'http://example.com/hc'
       )
 
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('fail')
       expect(result.result_message).to match(/did not include/)
@@ -137,6 +138,7 @@ RSpec.describe Covid19VCI::FileDownload do
 
   describe 'vci-file-03' do
     let(:test) { group.tests[2] }
+    let(:url) { 'http://example.com/hc' }
 
     it 'passes if the download url ends in .smart-health-card' do
       request_repo.create(
@@ -149,13 +151,13 @@ RSpec.describe Covid19VCI::FileDownload do
         result_id: repo_create(:result).id
       )
 
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('pass')
     end
 
     it 'skips if the vci_file_download request has not been made' do
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('skip')
       expect(result.result_message).to match(/vci_file_download/)
@@ -171,7 +173,7 @@ RSpec.describe Covid19VCI::FileDownload do
         result_id: repo_create(:result).id,
         url: 'http://example.com/hc'
       )
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('skip')
     end
@@ -191,7 +193,7 @@ RSpec.describe Covid19VCI::FileDownload do
           result_id: repo_create(:result).id
         )
 
-        result = run(test)
+        result = run(test, { file_download_url: url })
 
         expect(result.result).to eq('pass')
       end
@@ -206,7 +208,7 @@ RSpec.describe Covid19VCI::FileDownload do
           test_session_id: test_session.id,
           result_id: repo_create(:result).id
         )
-        result = run(test)
+        result = run(test, { file_download_url: url })
 
         expect(result.result).to eq('fail')
       end
@@ -223,7 +225,7 @@ RSpec.describe Covid19VCI::FileDownload do
           result_id: repo_create(:result).id
         )
 
-        result = run(test)
+        result = run(test, { file_download_url: url })
 
         expect(result.result).to eq('fail')
         expect(result.result_message).to match(/should be downloaded/)
@@ -240,7 +242,7 @@ RSpec.describe Covid19VCI::FileDownload do
           test_session_id: test_session.id,
           result_id: repo_create(:result).id
         )
-        result = run(test)
+        result = run(test, { file_download_url: url })
 
         expect(result.result).to eq('fail')
         expect(result.result_message).to match(/extension/)
@@ -250,6 +252,7 @@ RSpec.describe Covid19VCI::FileDownload do
 
   describe 'vci-file-04' do
     let(:test) { group.tests[3] }
+    let(:url) { 'http://example.com/hc' }
 
     it 'passes if the response contains an array of VC strings' do
       request_repo.create(
@@ -263,13 +266,13 @@ RSpec.describe Covid19VCI::FileDownload do
         url: 'http://example.com/hc'
       )
 
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('pass')
     end
 
     it 'skips if the vci_file_download request has not been made' do
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('skip')
       expect(result.result_message).to match(/vci_file_download/)
@@ -285,7 +288,7 @@ RSpec.describe Covid19VCI::FileDownload do
         result_id: repo_create(:result).id,
         url: 'http://example.com/hc'
       )
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('skip')
     end
@@ -302,7 +305,7 @@ RSpec.describe Covid19VCI::FileDownload do
         url: 'http://example.com/hc'
       )
 
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('fail')
       expect(result.result_message).to match(/does not contain/)
@@ -320,7 +323,7 @@ RSpec.describe Covid19VCI::FileDownload do
         url: 'http://example.com/hc'
       )
 
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('fail')
       expect(result.result_message).to match(/must contain an Array/)
@@ -338,7 +341,7 @@ RSpec.describe Covid19VCI::FileDownload do
         url: 'http://example.com/hc'
       )
 
-      result = run(test)
+      result = run(test, { file_download_url: url })
 
       expect(result.result).to eq('fail')
       expect(result.result_message).to match(/at least one/)
