@@ -1,6 +1,7 @@
 require 'health_cards'
-require_relative 'covid19_vci/file_download'
-require_relative 'covid19_vci/fhir_operation'
+require 'smart_health_cards_test_kit'
+# require_relative 'covid19_vci/file_download'
+# require_relative 'covid19_vci/fhir_operation'
 
 module Covid19VCI
   class Suite < Inferno::TestSuite
@@ -23,7 +24,7 @@ module Covid19VCI
       end
     end
 
-    group from: :vci_file_download
-    group from: :vci_fhir_operation
+    group from: :shc_file_download_group
+    #group from: :vci_fhir_operation
   end
 end
