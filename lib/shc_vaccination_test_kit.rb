@@ -1,4 +1,3 @@
-require 'health_cards'
 require 'smart_health_cards_test_kit'
 # require_relative 'covid19_vci/file_download'
 # require_relative 'covid19_vci/fhir_operation'

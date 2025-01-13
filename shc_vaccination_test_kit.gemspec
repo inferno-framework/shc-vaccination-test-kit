@@ -12,7 +12,6 @@ Gem::Specification.new do |spec|
   spec.description   = 'A collection of tests for the SMART Health Cards: Vaccination & Testing FHIR Implementation Guide'
   spec.homepage      = 'https://github.com/inferno-framework/shc-vaccination-test-kit'
   spec.license       = 'Apache-2.0'
-  spec.add_runtime_dependency 'health_cards', '0.0.2'
   spec.add_runtime_dependency 'inferno_core', '~> 0.5.0'
   spec.add_runtime_dependency 'smart_health_cards_test_kit', '0.9.0'
   spec.add_development_dependency 'database_cleaner-sequel', '~> 1.8'

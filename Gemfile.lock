@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     shc_vaccination_test_kit (0.2.0)
-      health_cards (= 0.0.2)
       inferno_core (~> 0.5.0)
       smart_health_cards_test_kit (= 0.9.0)
 
@@ -130,9 +129,6 @@ GEM
       dry-transformer (~> 1.0, < 2)
     hansi (0.2.1)
     hashdiff (1.1.0)
-    health_cards (0.0.2)
-      fhir_models (>= 4.0.0)
-      rqrcode
     http-accept (1.7.0)
     http-cookie (1.0.6)
       domain_name (~> 0.5)
