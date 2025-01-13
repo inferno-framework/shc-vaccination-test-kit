@@ -24,7 +24,9 @@ module Covid19VCI
       end
     end
 
+    # Tests and TestGroups
     group from: :shc_file_download_group
-    #group from: :vci_fhir_operation
+    group from: :shc_fhir_operation_group
+
   end
 end
