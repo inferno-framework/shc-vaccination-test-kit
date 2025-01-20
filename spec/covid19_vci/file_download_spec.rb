@@ -1,4 +1,4 @@
-RSpec.describe Covid19VCI::FileDownload do
+RSpec.describe SHCVaccinationTestKit::FileDownload do
   let(:suite) { Inferno::Repositories::TestSuites.new.find('c19-vci') }
   let(:runner) { Inferno::TestRunner.new(test_session: test_session, test_run: test_run) }
   let(:test_session) do

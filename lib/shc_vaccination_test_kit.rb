@@ -2,7 +2,7 @@ require 'smart_health_cards_test_kit'
 # require_relative 'covid19_vci/file_download'
 # require_relative 'covid19_vci/fhir_operation'
 
-module Covid19VCI
+module SHCVaccinationTestKit
   class Suite < Inferno::TestSuite
     id 'c19-vci'
     title 'SMART Health Cards: Vaccination & Testing'

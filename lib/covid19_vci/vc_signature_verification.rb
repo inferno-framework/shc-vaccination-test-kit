@@ -1,4 +1,4 @@
-module Covid19VCI
+module SHCVaccinationTestKit
   class VCSignatureVerification < Inferno::Test
     title 'Verifiable Credential signatures can be verified'
     input :credential_strings

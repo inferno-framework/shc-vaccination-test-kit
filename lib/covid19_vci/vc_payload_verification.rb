@@ -1,4 +1,4 @@
-module Covid19VCI
+module SHCVaccinationTestKit
   class VCPayloadVerification < Inferno::Test
     title 'Health Card payloads follow the spec requirements'
     input :credential_strings

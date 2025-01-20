@@ -1,4 +1,4 @@
-module Covid19VCI
+module SHCVaccinationTestKit
   class VCHeaders < Inferno::Test
     title 'Health Cards contain the correct headers'
     input :credential_strings

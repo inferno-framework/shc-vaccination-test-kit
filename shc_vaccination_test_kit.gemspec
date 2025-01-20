@@ -4,7 +4,7 @@ require_relative 'lib/covid19_vci/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'shc_vaccination_test_kit'
-  spec.version       = Covid19VCI::VERSION
+  spec.version       = SHCVaccinationTestKit::VERSION
   spec.authors       = ['Stephen MacVicar']
   spec.email         = ['vci-ig@mitre.org']
   spec.date          = Time.now.utc.strftime('%Y-%m-%d')
