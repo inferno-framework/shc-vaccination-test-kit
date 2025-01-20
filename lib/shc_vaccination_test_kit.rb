@@ -4,7 +4,7 @@ require 'smart_health_cards_test_kit'
 
 module SHCVaccinationTestKit
   class Suite < Inferno::TestSuite
-    id 'c19-vci'
+    id 'shc_vaccination'
     title 'SMART Health Cards: Vaccination & Testing'
     description %(
       This test suite evaluates the ability of a system to provide

@@ -1,5 +1,5 @@
 RSpec.describe SHCVaccinationTestKit::FileDownload do
-  let(:suite) { Inferno::Repositories::TestSuites.new.find('c19-vci') }
+  let(:suite) { Inferno::Repositories::TestSuites.new.find('shc_vaccination') }
   let(:runner) { Inferno::TestRunner.new(test_session: test_session, test_run: test_run) }
   let(:test_session) do
     Inferno::Repositories::TestSessions.new.create(test_suite_id: suite.id)
