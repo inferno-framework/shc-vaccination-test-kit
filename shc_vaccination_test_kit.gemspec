@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'lib/covid19_vci/version'
+require_relative 'lib/shc_vaccincation/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'shc_vaccination_test_kit'

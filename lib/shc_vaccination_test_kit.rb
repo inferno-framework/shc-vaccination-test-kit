@@ -1,6 +1,4 @@
 require 'smart_health_cards_test_kit'
-# require_relative 'covid19_vci/file_download'
-# require_relative 'covid19_vci/fhir_operation'
 
 module SHCVaccinationTestKit
   class Suite < Inferno::TestSuite
@@ -23,23 +21,23 @@ module SHCVaccinationTestKit
       end
     end
 
-    scan_qr_code_html = File.read(File.join(__dir__, './covid19_vci/views/scan_qr_code.html'))
+    scan_qr_code_html = File.read(File.join(__dir__, './shc_vaccincation/views/scan_qr_code.html'))
     scan_qr_code_html_route_handler = proc { [200, { 'Content-Type' => 'text/html' }, [scan_qr_code_html]] }
     route(:get, '/scan_qr_code', scan_qr_code_html_route_handler)
 
-    qr_scanner = File.read(File.join(__dir__, './covid19_vci/javascript/qr-scanner.min.js'))
+    qr_scanner = File.read(File.join(__dir__, './shc_vaccincation/javascript/qr-scanner.min.js'))
     qr_scanner_route_handler = proc { [200, { 'Content-Type' => 'text/javascript' }, [qr_scanner]] }
     route(:get, '/qr-scanner.min.js', qr_scanner_route_handler)
 
-    qr_scanner_worker = File.read(File.join(__dir__, './covid19_vci/javascript/qr-scanner-worker.min.js'))
+    qr_scanner_worker = File.read(File.join(__dir__, './shc_vaccincation/javascript/qr-scanner-worker.min.js'))
     qr_scanner_worker_route_handler = proc { [200, { 'Content-Type' => 'text/javascript' }, [qr_scanner_worker]] }
     route(:get, '/qr-scanner-worker.min.js', qr_scanner_worker_route_handler)
 
-    js_qr = File.read(File.join(__dir__, './covid19_vci/javascript/jsQR.js'))
+    js_qr = File.read(File.join(__dir__, './shc_vaccincation/javascript/jsQR.js'))
     js_qr_route_handler = proc { [200, { 'Content-Type' => 'text/javascript' }, [js_qr]] }
     route(:get, '/jsqr.js', js_qr_route_handler)
 
-    upload_html = File.read(File.join(__dir__, './covid19_vci/views/upload_qr_code.html'))
+    upload_html = File.read(File.join(__dir__, './shc_vaccincation/views/upload_qr_code.html'))
     upload_html_route_handler = proc { [200, { 'Content-Type' => 'text/html' }, [upload_html]] }
     route(:get, '/upload_qr_code', upload_html_route_handler)
 
