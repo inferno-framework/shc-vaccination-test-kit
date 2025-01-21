@@ -1,5 +1,5 @@
 module SHCVaccinationTestKit
-  class VCFHIRVerification < Inferno::Test
+  class SHCVaccinationFHIRValidation < Inferno::Test
     title 'Health Card payloads conform to the Vaccination Credential Bundle Profiles'
     input :credential_strings
 
