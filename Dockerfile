@@ -6,7 +6,7 @@ RUN mkdir -p $INSTALL_PATH
 
 WORKDIR $INSTALL_PATH
 
-ADD lib/covid19_vci/version.rb $INSTALL_PATH/lib/covid19_vci/version.rb
+ADD lib/shc_vaccincation/version.rb $INSTALL_PATH/lib/shc_vaccincation/version.rb
 ADD *.gemspec $INSTALL_PATH
 ADD Gemfile* $INSTALL_PATH
 RUN gem install bundler
