@@ -1,9 +1,12 @@
-module Covid19VCI
-  class VCFHIRVerification < Inferno::Test
-    title 'Health Card payloads conform to the Vaccination Credential Bundle Profiles'
-    input :credential_strings
+module SHCVaccinationTestKit
+  class SHCVaccinationFHIRValidation < Inferno::Test
 
-    id :vc_fhir_verification
+    id :shc_vaccination_validation_test
+    title 'test Health Card payloads conform to the Vaccination Credential Bundle Profiles'
+    description %(
+      SMART Health Card (SHC) for vaccination records payload SHALL be a valid FHIR Bundle resource
+    )
+    input :credential_strings
 
     run do
       skip_if credential_strings.blank?, 'No Verifiable Credentials received'

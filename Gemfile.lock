@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     shc_vaccination_test_kit (0.2.0)
-      health_cards (= 0.0.2)
-      inferno_core (>= 0.4.37)
+      inferno_core (~> 0.5.0)
+      smart_health_cards_test_kit (= 0.9.0)
 
 GEM
   remote: https://rubygems.org/
@@ -129,15 +129,12 @@ GEM
       dry-transformer (~> 1.0, < 2)
     hansi (0.2.1)
     hashdiff (1.1.0)
-    health_cards (0.0.2)
-      fhir_models (>= 4.0.0)
-      rqrcode
     http-accept (1.7.0)
     http-cookie (1.0.6)
       domain_name (~> 0.5)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
-    inferno_core (0.4.39)
+    inferno_core (0.5.4)
       activesupport (~> 6.1.7.5)
       base62-rb (= 0.3.1)
       blueprinter (= 0.25.2)
@@ -154,6 +151,7 @@ GEM
       hanami-controller (= 2.0.0)
       hanami-router (= 2.0.0)
       oj (= 3.11.0)
+      pastel (~> 0.8.0)
       pry
       pry-byebug
       puma (~> 5.6.7)
@@ -254,6 +252,10 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.19.0)
+    smart_health_cards_test_kit (0.9.0)
+      inferno_core (>= 0.5.0)
+      rqrcode
+      rqrcode_core (>= 1.2.0)
     sqlite3 (1.7.3-arm64-darwin)
     sqlite3 (1.7.3-x86_64-darwin)
     sqlite3 (1.7.3-x86_64-linux)

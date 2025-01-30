@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'lib/covid19_vci/version'
+require_relative 'lib/shc_vaccination_test_kit/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'shc_vaccination_test_kit'
-  spec.version       = Covid19VCI::VERSION
+  spec.version       = SHCVaccinationTestKit::VERSION
   spec.authors       = ['Stephen MacVicar']
   spec.email         = ['vci-ig@mitre.org']
   spec.date          = Time.now.utc.strftime('%Y-%m-%d')
@@ -12,8 +12,8 @@ Gem::Specification.new do |spec|
   spec.description   = 'A collection of tests for the SMART Health Cards: Vaccination & Testing FHIR Implementation Guide'
   spec.homepage      = 'https://github.com/inferno-framework/shc-vaccination-test-kit'
   spec.license       = 'Apache-2.0'
-  spec.add_runtime_dependency 'health_cards', '0.0.2'
-  spec.add_runtime_dependency 'inferno_core', '>= 0.4.37'
+  spec.add_runtime_dependency 'inferno_core', '~> 0.5.0'
+  spec.add_runtime_dependency 'smart_health_cards_test_kit', '0.9.0'
   spec.add_development_dependency 'database_cleaner-sequel', '~> 1.8'
   spec.add_development_dependency 'factory_bot', '~> 6.1'
   spec.add_development_dependency 'rspec', '~> 3.10'
