@@ -42,36 +42,32 @@ module SHCVaccinationTestKit
 
         bundle = FHIR::Bundle.new(raw_bundle)
 
-        # assert bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) } || bundle.entry.any? { |r| r.resource.is_a?(FHIR::Observation) },
-        # "Bundle must have either Immunization entries or Observation entries"
-
-        # if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) }
+        #begin new code FI-3622
+        assert bundle.type == "collection", "bundle.type shall be collection"
+        if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) }
+          #bundle is an Immunization Bundle
           assert_valid_resource(
             resource: bundle,
-            profile_url: 'http://hl7.org/fhir/uv/smarthealthcards-vaccination/StructureDefinition/vaccination-credential-bundle'
+            profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-bundle-dm'
           )
+        elsif bundle.entry.any? { |r| r.resource.is_a?(FHIR::Observation) }
+          #bundle is either a COVID-19 Labs Bundle or Generic Labs Bundle
 
-          warning do
-            assert_valid_resource(
-              resource: bundle,
-              profile_url: 'http://hl7.org/fhir/uv/smarthealthcards-vaccination/StructureDefinition/vaccination-credential-bundle-dm'
-            )
-          end
-        # end
+          #TODO: determin which type of bundle
 
-        if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Observation) }
           assert_valid_resource(
             resource: bundle,
-            profile_url: 'http://hl7.org/fhir/uv/smarthealthcards-vaccination/StructureDefinition/covid19-laboratory-bundle'
+            profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm'
           )
-
-          warning do
-            assert_valid_resource(
-              resource: bundle,
-              profile_url: 'http://hl7.org/fhir/uv/smarthealthcards-vaccination/StructureDefinition/covid19-laboratory-bundle-dm'
-            )
-          end
+        else 
+          #error: resource is a bundle, but none of the 3 bundle types defined in the shc-vaccination-ifg
         end
+
+
+        #end new code FI-3622
+
+
+        
       end
     end
   end
