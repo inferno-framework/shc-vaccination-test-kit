@@ -1,4 +1,5 @@
-require_relative "../../lib/shc_vaccination_test_kit/shc_vaccination_validation_test.rb"
+require_relative '../../lib/shc_vaccination_test_kit/shc_vaccination_validation_test.rb'
+
 RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
   let(:suite) { Inferno::Repositories::TestSuites.new.find('shc_vaccination') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
@@ -23,7 +24,9 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
     let(:url) { 'http://example.com/hc' }
 
     #TODO: placeholder
-    expect([1, 2, 3]).to eq([1, 2, 3])
+    it '..' do
+      expect(1).to eq(1)
+    end
   end
 
 

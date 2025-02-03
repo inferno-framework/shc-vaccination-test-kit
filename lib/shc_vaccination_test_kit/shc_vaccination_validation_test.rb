@@ -1,3 +1,5 @@
+require 'inferno'
+
 module SHCVaccinationTestKit
   class SHCVaccinationFHIRValidation < Inferno::Test
 
@@ -59,7 +61,7 @@ module SHCVaccinationTestKit
             resource: bundle,
             profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm'
           )
-        else 
+        else
           #error: resource is a bundle, but none of the 3 bundle types defined in the shc-vaccination-ifg
         end
 
@@ -67,7 +69,7 @@ module SHCVaccinationTestKit
         #end new code FI-3622
 
 
-        
+
       end
     end
   end
