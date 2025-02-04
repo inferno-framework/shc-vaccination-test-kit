@@ -44,33 +44,49 @@ module SHCVaccinationTestKit
 
         bundle = FHIR::Bundle.new(raw_bundle)
 
-        #begin new code FI-3622
-        assert bundle.type == "collection", "bundle.type shall be collection"
-        if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) }
-          #bundle is an Immunization Bundle
-          assert_valid_resource(
-            resource: bundle,
-            profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-bundle-dm'
-          )
-        elsif bundle.entry.any? { |r| r.resource.is_a?(FHIR::Observation) }
-          #bundle is either a COVID-19 Labs Bundle or Generic Labs Bundle
+        validate_fhir_bundle(bundle)
 
-          #TODO: determin which type of bundle
 
-          assert_valid_resource(
-            resource: bundle,
-            profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm'
-          )
-        else
-          #error: resource is a bundle, but none of the 3 bundle types defined in the shc-vaccination-ifg
-        end
+      end
+    end
+
+    def validate_fhir_bundle(bundle)
+      assert bundle.type == 'collection'
+              #begin new code FI-3622
+
+        # assert bundle.type == "collection", "bundle.type shall be collection"
+        # if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) }
+        #   #bundle is an Immunization Bundle
+        #   assert_valid_resource(
+        #     resource: bundle,
+        #     profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-bundle-dm'
+        #   )
+        # elsif bundle.entry.any? { |r| r.resource.is_a?(FHIR::Observation) }
+        #   #bundle is either a COVID-19 Labs Bundle or Generic Labs Bundle
+
+        #   #TODO: determin which type of bundle
+
+        #   assert_valid_resource(
+        #     resource: bundle,
+        #     profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm'
+        #   )
+        # else
+        #   #error: resource is a bundle, but none of the 3 bundle types defined in the shc-vaccination-ifg
+        # end
 
 
         #end new code FI-3622
 
 
+    end
 
-      end
+    def validate_vaccination_bundle(bundle)
+    end
+
+    def validate_covid_labs_bundle(bundle)
+    end
+
+    def validate_general_labs_bundle(bundle)
     end
   end
 end

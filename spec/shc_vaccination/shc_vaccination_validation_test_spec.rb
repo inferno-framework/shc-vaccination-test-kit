@@ -29,6 +29,19 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
     end
   end
 
+  describe 'validate_fhir_bundle_test' do
+    let(:subject) { SHCVaccinationTestKit::SHCVaccinationFHIRValidation.new }
+    let(:vaccincation_bundle) do
+      FHIR::Bundle.new(
+        type: 'collection'
+      )
+    end
+
+    it 'validate vaccination bundle' do
+      expect{subject.validate_fhir_bundle(vaccincation_bundle)}.not_to raise_error()
+    end
+  end
+
 
 
 
