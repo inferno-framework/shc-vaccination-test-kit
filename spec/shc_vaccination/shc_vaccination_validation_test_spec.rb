@@ -116,15 +116,131 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
 
     let(:covid_labs_bundle) do
       FHIR::Bundle.new(
-        type: 'collection'
+        resourceType: 'Bundle',
+        type: 'collection',
+        entry: [
+          {
+            fullUrl: 'resource:0',
+            resource: FHIR::Patient.new(
+              resourceType: 'Patient',
+              name: [
+                {
+                  family: 'Anyperson',
+                  given: ['James', 'T.']
+                }
+              ],
+              birthDate: '1951-01-20'
+            )
+          },
+          {
+            fullUrl: 'resource:1',
+            resource: FHIR::Observation.new(
+              resourceType: 'Observation',
+              meta: {
+                security: [
+                  {
+                    system: 'https://smarthealth.cards/ial',
+                    code: 'IAL2'
+                  }
+                ]
+              },
+              status: 'final',
+              code: {
+                coding: [
+                  {
+                    system: 'http://loinc.org',
+                    code: '94558-4'
+                  }
+                ]
+              },
+              subject: {
+                reference: 'resource:0'
+              },
+              effectiveDateTime: '2021-02-17',
+              performer: [
+                {
+                  display: 'ABC General Hospital'
+                }
+              ],
+              valueCodeableConcept: {
+                coding: [
+                  {
+                    system: 'http://snomed.info/sct',
+                    code: '260373001'
+                  }
+                ]
+              }
+            )
+          }
+        ]
       )
     end
 
     let(:general_labs_bundle) do
       FHIR::Bundle.new(
-        type: 'collection'
+        resourceType: 'Bundle',
+        type: 'collection',
+        entry: [
+          {
+            fullUrl: 'resource:0',
+            resource: FHIR::Patient.new(
+              resourceType: 'Patient',
+              name: [
+                {
+                  family: 'Anyperson',
+                  given: ['James', 'T.']
+                }
+              ],
+              birthDate: '1951-01-20'
+            )
+          },
+          {
+            fullUrl: 'resource:1',
+            resource: FHIR::Observation.new(
+              resourceType: 'Observation',
+              meta: {
+                security: [
+                  {
+                    system: 'https://smarthealth.cards/ial',
+                    code: 'IAL2'
+                  }
+                ]
+              },
+              status: 'final',
+              code: {
+                coding: [
+                  {
+                    system: 'http://loinc.org',
+                    code: '94558-4'
+                  }
+                ]
+              },
+              subject: {
+                reference: 'resource:0'
+              },
+              effectiveDateTime: '2021-02-17',
+              performer: [
+                {
+                  display: 'ABC General Hospital'
+                }
+              ],
+              valueCodeableConcept: {
+                coding: [
+                  {
+                    system: 'http://snomed.info/sct',
+                    code: '260373001'
+                  }
+                ]
+              }
+            )
+          }
+        ]
       )
     end
+
+    #TODO: I copied the examples directly from the IG. covid_labs_bundle and general_labs_bundle are identical. May need unique examples. urls below:
+    #https://build.fhir.org/ig/HL7/fhir-shc-vaccination-ig/Bundle-example-bundle-lab-test-results-covid-3.json
+    #https://build.fhir.org/ig/HL7/fhir-shc-vaccination-ig/Bundle-example-bundle-lab-test-results-covid.json
 
     it 'passes if input is a valid vaccination bundle' do
       expect{subject.validate_vaccination_bundle(vaccincation_bundle)}.not_to raise_error()
