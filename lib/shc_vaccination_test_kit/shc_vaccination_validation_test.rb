@@ -81,12 +81,16 @@ module SHCVaccinationTestKit
     end
 
     def validate_vaccination_bundle(bundle)
+      #binding.pry
     end
 
     def validate_covid_labs_bundle(bundle)
+      #binding.pry
     end
 
     def validate_general_labs_bundle(bundle)
+      #binding.pry
     end
+
   end
 end

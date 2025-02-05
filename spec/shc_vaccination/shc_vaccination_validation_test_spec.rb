@@ -24,7 +24,93 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
 
     let(:vaccincation_bundle) do
       FHIR::Bundle.new(
-        type: 'collection'
+        resourceType: 'Bundle',
+        type: 'collection',
+        entry: [
+          {
+            fullUrl: 'resource:0',
+            resource: FHIR::Patient.new(
+              resourceType: 'Patient',
+              name: [
+                {
+                  family: 'Anyperson',
+                  given: ['Jane', 'C.']
+                }
+              ],
+              birthDate: '1961-01-20'
+            )
+          },
+          {
+            fullUrl: 'resource:1',
+            resource: FHIR::Immunization.new(
+              resourceType: 'Immunization',
+              meta: {
+                security: [
+                  {
+                    system: 'https://smarthealth.cards/ial',
+                    code: 'IAL2'
+                  }
+                ]
+              },
+              status: 'completed',
+              vaccineCode: {
+                coding: [
+                  {
+                    system: 'http://hl7.org/fhir/sid/cvx',
+                    code: '206'
+                  }
+                ]
+              },
+              patient: {
+                reference: 'resource:0'
+              },
+              occurrenceDateTime: '2022-08-01',
+              lotNumber: '0000002',
+              performer: [
+                {
+                  actor: {
+                    display: 'ABC General Hospital'
+                  }
+                }
+              ]
+            )
+          },
+          {
+            fullUrl: 'resource:2',
+            resource: FHIR::Immunization.new(
+              resourceType: 'Immunization',
+              meta: {
+                security: [
+                  {
+                    system: 'https://smarthealth.cards/ial',
+                    code: 'IAL2'
+                  }
+                ]
+              },
+              status: 'completed',
+              vaccineCode: {
+                coding: [
+                  {
+                    system: 'http://hl7.org/fhir/sid/cvx',
+                    code: '206'
+                  }
+                ]
+              },
+              patient: {
+                reference: 'resource:0'
+              },
+              occurrenceDateTime: '2022-08-29',
+              lotNumber: '0000003',
+              performer: [
+                {
+                  actor: {
+                    display: 'ABC General Hospital'
+                  }
+                }
+              ]
+            )
+          }
+        ]
       )
     end
 
@@ -45,11 +131,11 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
     end
 
     it 'passes if input is a valid COVID labs bundle' do
-      expect{subject.validate_covid_labs_bundle(vaccincation_bundle)}.not_to raise_error()
+      expect{subject.validate_covid_labs_bundle(covid_labs_bundle)}.not_to raise_error()
     end
 
     it 'passes if input is a valid general labs bundle' do
-      expect{subject.validate_general_labs_bundle(vaccincation_bundle)}.not_to raise_error()
+      expect{subject.validate_general_labs_bundle(general_labs_bundle)}.not_to raise_error()
     end
 
     #TODO: test that an invalid input will fail for all 3 bundle types
