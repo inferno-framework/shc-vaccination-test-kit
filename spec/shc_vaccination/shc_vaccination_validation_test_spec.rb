@@ -19,34 +19,40 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
     Inferno::TestRunner.new(test_session: test_session, test_run: test_run).run(runnable)
   end
 
-  describe 'shc_vaccination_bundle_validation_test' do
-    let(:test) { group.tests.find{ |t| t.id.include?('shc_vaccination_validation_test')} }
-    let(:url) { 'http://example.com/hc' }
-
-    #TODO: placeholder
-    it '..' do
-      expect(1).to eq(1)
-    end
-  end
-
   describe 'validate_fhir_bundle_test' do
     let(:subject) { SHCVaccinationTestKit::SHCVaccinationFHIRValidation.new }
+
     let(:vaccincation_bundle) do
       FHIR::Bundle.new(
         type: 'collection'
       )
     end
 
-    it 'validate vaccination bundle' do
-      expect{subject.validate_fhir_bundle(vaccincation_bundle)}.not_to raise_error()
+    let(:covid_labs_bundle) do
+      FHIR::Bundle.new(
+        type: 'collection'
+      )
     end
+
+    let(:general_labs_bundle) do
+      FHIR::Bundle.new(
+        type: 'collection'
+      )
+    end
+
+    it 'passes if input is a valid vaccination bundle' do
+      expect{subject.validate_vaccination_bundle(vaccincation_bundle)}.not_to raise_error()
+    end
+
+    it 'passes if input is a valid COVID labs bundle' do
+      expect{subject.validate_covid_labs_bundle(vaccincation_bundle)}.not_to raise_error()
+    end
+
+    it 'passes if input is a valid general labs bundle' do
+      expect{subject.validate_general_labs_bundle(vaccincation_bundle)}.not_to raise_error()
+    end
+
+    #TODO: test that an invalid input will fail for all 3 bundle types
+
   end
-
-
-
-
-
-
-
-
 end
