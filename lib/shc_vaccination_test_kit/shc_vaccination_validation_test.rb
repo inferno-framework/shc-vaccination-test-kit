@@ -71,7 +71,7 @@ module SHCVaccinationTestKit
         else
           #for a vaccination bundle, if the entry is not a Patient, then it must be an Immunization
           assert vaccination_bundle_entry.resource.is_a?(FHIR::Immunization),
-            "#{vaccination_bundle_entry.resource.class} resource is not allowed in a Immunization Bundle"
+            "#{vaccination_bundle_entry.resource.class} resource is not allowed in an Immunization Bundle"
 
           assert_valid_resource(
             resource: vaccination_bundle_entry.resource,
@@ -80,8 +80,8 @@ module SHCVaccinationTestKit
           immunization_entry_counter += 1
         end
       end
-      assert patient_entry_counter == 1
-      assert immunization_entry_counter > 0
+      assert patient_entry_counter == 1 #need error message
+      assert immunization_entry_counter > 0 #need error message
     end
 
     def validate_labs_bundle(bundle)
