@@ -176,14 +176,12 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
       )
     end
     
-
     it 'passes if input is a valid vaccination bundle' do
-      #expect{subject.validate_fhir_bundle(vaccincation_bundle)}.not_to raise_error()
-      #expect{subject.validate_vaccination_bundle(vaccincation_bundle)}.not_to raise_error()
+      expect{subject.validate_fhir_bundle(vaccination_bundle)}.not_to raise_error()
     end
 
     it 'passes if input is a valid labs bundle' do
-      #expect{subject.validate_covid_labs_bundle(covid_labs_bundle)}.not_to raise_error()
+      expect{subject.validate_fhir_bundle(labs_bundle)}.not_to raise_error()
     end
 
     #TODO: test that an invalid input will fail for all all bundle types

@@ -51,47 +51,69 @@ module SHCVaccinationTestKit
     end
 
     def validate_fhir_bundle(bundle)
-      assert bundle.type == 'collection'
-              #begin new code FI-3622
+      
+      #begin new code FI-3622
 
-         assert bundle.type == "collection", "bundle.type shall be collection"
-         if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) }
-           #bundle is an Immunization Bundle
-           assert_valid_resource(
-             resource: bundle,
-             profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-bundle-dm'
-           )
-         elsif bundle.entry.any? { |r| r.resource.is_a?(FHIR::Observation) }
-           #bundle is either a COVID-19 Labs Bundle or Generic Labs Bundle
+      #TODO: what if bundle has an Immunization and an Observation?
 
-           #TODO: determin which type of bundle
-           assert_valid_resource(
-             resource: bundle,
-             profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm'
-           )
-         else
-           #error: resource is a bundle, but none of the 3 bundle types defined in the shc-vaccination-ifg
-         end
+      assert bundle.type == "collection", "bundle.type shall be collection"
+      if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) }
+        #bundle is an Immunization Bundle
+        validate_vaccination_bundle(bundle)
+      elsif bundle.entry.any? { |r| r.resource.is_a?(FHIR::Observation) }
+        #bundle is either a COVID-19 Labs Bundle or Generic Labs Bundle
+        validate_labs_bundle(bundle)
+      else
+        #TODO: if we reach this line, the test has failed
+        #assert (false, "The resource is a bundle, but does not conform to any of bundle profiles defined in the shc-vaccination-ifg")
+      end
 
 
-        #end new code FI-3622
+    #end new code FI-3622
 
 
     end
 
     def validate_vaccination_bundle(bundle)
-      #binding.pry
-      assert bundle.type == 'collection'
-      assert_valid_resource(
-              #TODO: patient is a required slice, but cannot assume it will always be the first element. Get this working first, then generalize
-              resource: bundle.entry[0].resource,
-              profile_url: 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient'
-           )
+      patient_entry_counter = 0
+      immunization_entry_counter = 0
+      bundle.entry.each do |vaccination_bundle_entry|
+        if vaccination_bundle_entry.resource.is_a?(FHIR::Patient)
+          #do we need to validate patient?
+          patient_entry_counter += 1
+        else
+          #for a vaccination bundle, if the entry is not a Patient, then it must be an Immunization
+          assert vaccination_bundle_entry.resource.is_a?(FHIR::Immunization)
+          #assert_valid_resource(
+          #  resource: vaccination_bundle_entry.resource,
+          #  profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad'
+          #)
+          immunization_entry_counter += 1
+        end
+      end
+      assert patient_entry_counter == 1
+      assert immunization_entry_counter > 0
     end
 
     def validate_labs_bundle(bundle)
-      #TODO: complete method
-      #binding.pry
+      patient_entry_counter = 0
+      lab_result_entry_counter = 0
+      bundle.entry.each do |vaccination_bundle_entry|
+        if vaccination_bundle_entry.resource.is_a?(FHIR::Patient)
+          #do we need to validate patient?
+          patient_entry_counter += 1
+        else
+          #for a labs bundle, if the entry is not a Patient, then it must be a lab result (Observation)
+          assert vaccination_bundle_entry.resource.is_a?(FHIR::Observation)
+          #assert_valid_resource(
+          #  resource: vaccination_bundle_entry.resource,
+          #  profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad'
+          #)
+          lab_result_entry_counter += 1
+        end
+      end
+      assert patient_entry_counter == 1
+      assert lab_result_entry_counter > 0
     end
 
   end
