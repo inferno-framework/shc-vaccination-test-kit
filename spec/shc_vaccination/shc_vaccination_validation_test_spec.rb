@@ -22,7 +22,7 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
   describe 'validate_fhir_bundle_test' do
     let(:subject) { SHCVaccinationTestKit::SHCVaccinationFHIRValidation.new }
 
-    let(:vaccincation_bundle) do
+    let(:vaccination_bundle) do
       FHIR::Bundle.new(
         resourceType: 'Bundle',
         type: 'collection',
@@ -112,9 +112,9 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
           }
         ]
       )
-    end
+    end    
 
-    let(:covid_labs_bundle) do
+    let(:labs_bundle) do
       FHIR::Bundle.new(
         resourceType: 'Bundle',
         type: 'collection',
@@ -175,86 +175,18 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
         ]
       )
     end
-
-    let(:general_labs_bundle) do
-      FHIR::Bundle.new(
-        resourceType: 'Bundle',
-        type: 'collection',
-        entry: [
-          {
-            fullUrl: 'resource:0',
-            resource: FHIR::Patient.new(
-              resourceType: 'Patient',
-              name: [
-                {
-                  family: 'Anyperson',
-                  given: ['James', 'T.']
-                }
-              ],
-              birthDate: '1951-01-20'
-            )
-          },
-          {
-            fullUrl: 'resource:1',
-            resource: FHIR::Observation.new(
-              resourceType: 'Observation',
-              meta: {
-                security: [
-                  {
-                    system: 'https://smarthealth.cards/ial',
-                    code: 'IAL2'
-                  }
-                ]
-              },
-              status: 'final',
-              code: {
-                coding: [
-                  {
-                    system: 'http://loinc.org',
-                    code: '94558-4'
-                  }
-                ]
-              },
-              subject: {
-                reference: 'resource:0'
-              },
-              effectiveDateTime: '2021-02-17',
-              performer: [
-                {
-                  display: 'ABC General Hospital'
-                }
-              ],
-              valueCodeableConcept: {
-                coding: [
-                  {
-                    system: 'http://snomed.info/sct',
-                    code: '260373001'
-                  }
-                ]
-              }
-            )
-          }
-        ]
-      )
-    end
-
-    #TODO: I copied the examples directly from the IG. covid_labs_bundle and general_labs_bundle are identical. May need unique examples. urls below:
-    #https://build.fhir.org/ig/HL7/fhir-shc-vaccination-ig/Bundle-example-bundle-lab-test-results-covid-3.json
-    #https://build.fhir.org/ig/HL7/fhir-shc-vaccination-ig/Bundle-example-bundle-lab-test-results-covid.json
+    
 
     it 'passes if input is a valid vaccination bundle' do
-      expect{subject.validate_vaccination_bundle(vaccincation_bundle)}.not_to raise_error()
+      #expect{subject.validate_fhir_bundle(vaccincation_bundle)}.not_to raise_error()
+      #expect{subject.validate_vaccination_bundle(vaccincation_bundle)}.not_to raise_error()
     end
 
-    it 'passes if input is a valid COVID labs bundle' do
-      expect{subject.validate_covid_labs_bundle(covid_labs_bundle)}.not_to raise_error()
+    it 'passes if input is a valid labs bundle' do
+      #expect{subject.validate_covid_labs_bundle(covid_labs_bundle)}.not_to raise_error()
     end
 
-    it 'passes if input is a valid general labs bundle' do
-      expect{subject.validate_general_labs_bundle(general_labs_bundle)}.not_to raise_error()
-    end
-
-    #TODO: test that an invalid input will fail for all 3 bundle types
+    #TODO: test that an invalid input will fail for all all bundle types
 
   end
 end

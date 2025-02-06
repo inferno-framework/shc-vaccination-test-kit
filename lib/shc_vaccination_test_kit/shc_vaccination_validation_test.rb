@@ -54,25 +54,24 @@ module SHCVaccinationTestKit
       assert bundle.type == 'collection'
               #begin new code FI-3622
 
-        # assert bundle.type == "collection", "bundle.type shall be collection"
-        # if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) }
-        #   #bundle is an Immunization Bundle
-        #   assert_valid_resource(
-        #     resource: bundle,
-        #     profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-bundle-dm'
-        #   )
-        # elsif bundle.entry.any? { |r| r.resource.is_a?(FHIR::Observation) }
-        #   #bundle is either a COVID-19 Labs Bundle or Generic Labs Bundle
+         assert bundle.type == "collection", "bundle.type shall be collection"
+         if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) }
+           #bundle is an Immunization Bundle
+           assert_valid_resource(
+             resource: bundle,
+             profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-bundle-dm'
+           )
+         elsif bundle.entry.any? { |r| r.resource.is_a?(FHIR::Observation) }
+           #bundle is either a COVID-19 Labs Bundle or Generic Labs Bundle
 
-        #   #TODO: determin which type of bundle
-
-        #   assert_valid_resource(
-        #     resource: bundle,
-        #     profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm'
-        #   )
-        # else
-        #   #error: resource is a bundle, but none of the 3 bundle types defined in the shc-vaccination-ifg
-        # end
+           #TODO: determin which type of bundle
+           assert_valid_resource(
+             resource: bundle,
+             profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm'
+           )
+         else
+           #error: resource is a bundle, but none of the 3 bundle types defined in the shc-vaccination-ifg
+         end
 
 
         #end new code FI-3622
@@ -82,13 +81,16 @@ module SHCVaccinationTestKit
 
     def validate_vaccination_bundle(bundle)
       #binding.pry
+      assert bundle.type == 'collection'
+      assert_valid_resource(
+              #TODO: patient is a required slice, but cannot assume it will always be the first element. Get this working first, then generalize
+              resource: bundle.entry[0].resource,
+              profile_url: 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient'
+           )
     end
 
-    def validate_covid_labs_bundle(bundle)
-      #binding.pry
-    end
-
-    def validate_general_labs_bundle(bundle)
+    def validate_labs_bundle(bundle)
+      #TODO: complete method
       #binding.pry
     end
 
