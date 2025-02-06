@@ -2,6 +2,7 @@ require 'inferno'
 
 module SHCVaccinationTestKit
   class SHCVaccinationFHIRValidation < Inferno::Test
+    include SmartHealthCardsTestKit::HealthCard
 
     id :shc_vaccination_validation_test
     title 'test Health Card payloads conform to the Vaccination Credential Bundle Profiles'
@@ -18,7 +19,6 @@ module SHCVaccinationTestKit
 
         jws = SmartHealthCardsTestKit::Utils::JWS.from_jws(credential)
         payload = payload_from_jws(jws)
-        #payload = SmartHealthCardsTestKit::HealthCard.payload_from_jws(jws)
 
         vc = payload['vc']
         assert vc.is_a?(Hash), "Expected 'vc' claim to be a JSON object, but found #{vc.class}"
@@ -38,7 +38,7 @@ module SHCVaccinationTestKit
     end
 
     def validate_fhir_bundle(bundle)
-      
+
       #begin new code FI-3622
 
       #TODO: what if bundle has an Immunization and an Observation?
@@ -70,7 +70,9 @@ module SHCVaccinationTestKit
           patient_entry_counter += 1
         else
           #for a vaccination bundle, if the entry is not a Patient, then it must be an Immunization
-          assert vaccination_bundle_entry.resource.is_a?(FHIR::Immunization)
+          assert vaccination_bundle_entry.resource.is_a?(FHIR::Immunization),
+            "#{vaccination_bundle_entry.resource.class} resource is not allowed in a Immunization Bundle"
+
           assert_valid_resource(
             resource: vaccination_bundle_entry.resource,
             profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad'
