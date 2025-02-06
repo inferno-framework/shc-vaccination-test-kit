@@ -14,25 +14,9 @@ module SHCVaccinationTestKit
       skip_if credential_strings.blank?, 'No Verifiable Credentials received'
 
       credential_strings.split(',').each do |credential|
-        raw_payload = HealthCards::JWS.from_jws(credential).payload
-        assert raw_payload&.length&.positive?, 'No payload found'
-
-        decompressed_payload =
-          begin
-            Zlib::Inflate.new(-Zlib::MAX_WBITS).inflate(raw_payload)
-          rescue Zlib::DataError
-            assert false, 'Payload compression error. Unable to inflate payload.'
-          end
-
-        assert decompressed_payload.length.positive?, 'Payload compression error. Unable to inflate payload.'
-
-        payload_length = decompressed_payload.length
-        health_card = HealthCards::COVIDHealthCard.from_jws(credential)
-        health_card_length = health_card.to_json.length
-
-        assert_valid_json decompressed_payload, 'Payload is not valid JSON'
-
-        payload = JSON.parse(decompressed_payload)
+        jws = SmartHealthCardsTestKit::Utils::JWS.from_jws(credential)
+        payload = SmartHealthCardsTestKit::HealthCard.payload_from_jws(jws)
+        
         vc = payload['vc']
         assert vc.is_a?(Hash), "Expected 'vc' claim to be a JSON object, but found #{vc.class}"
 
@@ -84,10 +68,10 @@ module SHCVaccinationTestKit
         else
           #for a vaccination bundle, if the entry is not a Patient, then it must be an Immunization
           assert vaccination_bundle_entry.resource.is_a?(FHIR::Immunization)
-          #assert_valid_resource(
-          #  resource: vaccination_bundle_entry.resource,
-          #  profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad'
-          #)
+          assert_valid_resource(
+            resource: vaccination_bundle_entry.resource,
+            profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad'
+          )
           immunization_entry_counter += 1
         end
       end
