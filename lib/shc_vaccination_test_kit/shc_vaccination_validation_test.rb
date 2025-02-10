@@ -80,8 +80,8 @@ module SHCVaccinationTestKit
           immunization_entry_counter += 1
         end
       end
-      assert patient_entry_counter == 1 #need error message
-      assert immunization_entry_counter > 0 #need error message
+      assert patient_entry_counter == 1, "Expected vaccination bundle to have exactly 1 patient but found #{patient_entry_counter}"
+      assert immunization_entry_counter > 0, "Expected vaccination bundle to have at least 1 immunization but found #{immunization_entry_counter}"
     end
 
     def validate_labs_bundle(bundle)

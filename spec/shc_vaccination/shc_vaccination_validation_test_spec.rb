@@ -40,7 +40,6 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
     it 'passes if the JWS payload conforms to the FHIR Vaccination Bundle profile' do
       credential_strings = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjRIVWIyYXJ2aFRTWHNzRW9NczJHNVRvRHBzWXZzajdoNXdUXzN6TkV0dWcifQ.fZBLT8MwEIT_y3JN0jip1MZH1ANHJB4X1IPrbMkix678iFSq_HfWDQiEBL6NPfN5di9AIYCEIcaTXK2M08oMLkTZ1nUNBdjDEaTYtJ3Yduu2KWDSIC8QzycE-XKNBc6FUfk4oDJxqLTyfbhZRJkFY_72aTdRL7p_PTSOydK7iuQs7AvQHnu0kZR5SIc31DFXOg7kn9GH7JGwrupKMDTf3ibbG_yuDdoZw6nsLIBB_syzMCEZ8-QNGzwGl7xGmVfwJTLAqhEXrxrJcAzuUh-unFea0Oad7JQnB_uZix6IJ9mpmD8V3aYphSib7Q_m41LonkfjHjDn0K-3z_Yznw8.LntON-7UwMMrHyk2aC4kvdyX9GgPedr4-uOURH8mBg9MycnXIf9fd0OvTqe0-YiGTDhqYYhwx6rKHjyb7IKe6w'
       result = run(test, { file_download_url: url, url: url, credential_strings: credential_strings})
-      #binding.pry
       expect(result.result).to eq('pass')
     end
   end
