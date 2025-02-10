@@ -44,6 +44,7 @@ module SHCVaccinationTestKit
       #TODO: what if bundle has an Immunization and an Observation?
 
       assert bundle.type == "collection", "bundle.type shall be collection"
+      #binding.pry
       if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) }
         #bundle is an Immunization Bundle
         validate_vaccination_bundle(bundle)
@@ -51,8 +52,7 @@ module SHCVaccinationTestKit
         #bundle is either a COVID-19 Labs Bundle or Generic Labs Bundle
         validate_labs_bundle(bundle)
       else
-        #TODO: if we reach this line, the test has failed
-        #assert (false, "The resource is a bundle, but does not conform to any of bundle profiles defined in the shc-vaccination-ifg")
+        assert false, "The resource is a bundle, but does not conform to any of bundle profiles defined in the shc-vaccination-ifg"
       end
 
 
@@ -94,10 +94,10 @@ module SHCVaccinationTestKit
         else
           #for a labs bundle, if the entry is not a Patient, then it must be a lab result (Observation)
           assert vaccination_bundle_entry.resource.is_a?(FHIR::Observation)
-          #assert_valid_resource(
-          #  resource: vaccination_bundle_entry.resource,
-          #  profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad'
-          #)
+          assert_valid_resource(
+            resource: vaccination_bundle_entry.resource,
+            profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad'
+          )
           lab_result_entry_counter += 1
         end
       end
