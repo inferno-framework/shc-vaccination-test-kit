@@ -11,12 +11,15 @@ module SHCVaccinationTestKit
     input :credential_strings
 
     run do
+
       skip_if credential_strings.blank?, 'No Verifiable Credentials received'
 
       credential_strings.split(',').each do |credential|
+
         jws = SmartHealthCardsTestKit::Utils::JWS.from_jws(credential)
-        payload = SmartHealthCardsTestKit::HealthCard.payload_from_jws(jws)
-        
+        payload = payload_from_jws(jws)
+        #payload = SmartHealthCardsTestKit::HealthCard.payload_from_jws(jws)
+
         vc = payload['vc']
         assert vc.is_a?(Hash), "Expected 'vc' claim to be a JSON object, but found #{vc.class}"
 
@@ -98,6 +101,39 @@ module SHCVaccinationTestKit
       end
       assert patient_entry_counter == 1
       assert lab_result_entry_counter > 0
+    end
+
+    #TODO: this method was copied from smart-health-cards-test-kit. Should use the method in the ruby gem, but when I call...
+    #payload = SmartHealthCardsTestKit::HealthCard.payload_from_jws(jws)
+    #it cannot find the method
+    def payload_from_jws(jws)
+      return nil unless jws.present?
+
+      raw_payload = jws.payload
+      assert raw_payload&.length&.positive?, 'No payload found'
+
+      decompressed_payload =
+        begin
+          Zlib::Inflate.new(-Zlib::MAX_WBITS).inflate(raw_payload)
+        rescue Zlib::DataError
+          assert false, 'Payload compression error. Unable to inflate payload.'
+        end
+
+      assert decompressed_payload.length.positive?, 'Payload compression error. Unable to inflate payload.'
+
+      payload_length = decompressed_payload.length
+      raw_payload_length = raw_payload.length
+      decompressed_payload_length = decompressed_payload.length
+
+      warning do
+        assert raw_payload_length <= decompressed_payload_length,
+              "Payload may not be properly minified. Received a payload with length #{raw_payload_length}, " \
+              "but was able to generate a payload with length #{decompressed_payload_length}"
+      end
+
+      assert_valid_json decompressed_payload, 'Payload is not valid JSON'
+
+      JSON.parse(decompressed_payload)
     end
 
   end
