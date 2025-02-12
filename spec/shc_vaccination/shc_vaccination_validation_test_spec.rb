@@ -43,17 +43,17 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
       expect(result.result).to eq('pass')
     end
 
-    #it 'passes if the JWS payload conforms to the FHIR Labs Bundle profile' do
-    #  credential_strings = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjRIVWIyYXJ2aFRTWHNzRW9NczJHNVRvRHBzWXZzajdoNXdUXzN6TkV0dWcifQ.fZDdTsMwDIXfxdx2XcuGquZy4gEQfzdoF2nqrUFuMiVOpTH13XEoCIQEkW-cfOfk2BewMYKCgfmk1mvyRtPgI6tNVVVQgOsOoOpm015XUtsCJgPqAnw-IaiXD1kUXRx14AE18VAaHfp4tTSr3IjN35zxk-3r9l_GjmNy9k2z9Q72BZiAPTq2mh5S94qGc6TDYMMzhpgZBduyKmsxzbe75HrC79hgPJGoMlmAGIWzzCIOiegpkAABo0_BoMor-GqygdMjLqweLYkM7pPzdIi9Z7ZB6KOd0OXV7HDCIMh-lsSdlZFuNeff67a5WVVSzQ_zxyXZncwogWDOol9vn2PMct4B.y4PXk8xOo8ci0aIGOHjMcvzpTi5kpEfwjPPx548lc9ZrkhiSbr89TWb4vi3I86nhYyII9sliWqXLp9DK6q2kaA'
-    #  result = run(test, { file_download_url: url, url: url, credential_strings: credential_strings})
-    #  expect(result.result).to eq('pass')
-    #end
+    it 'passes if the JWS payload conforms to the FHIR Labs Bundle profile' do
+      credential_strings = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjRIVWIyYXJ2aFRTWHNzRW9NczJHNVRvRHBzWXZzajdoNXdUXzN6TkV0dWcifQ.hVNNj5swEP0v0ysE85EQOLZ7qSq1lbrtpcrBmCG4MnZkG9Tsiv_eMck2UbbZckGD37x57415Bukc1NB7f6iTRBnBVW-cr3PGGESgmw7qtMyrPC_ZlkUwCaifwR8PCPXPpc1Rnxu49T1y5fuV4LZ1705FHAqiuY8TZpJtWr2JkcMwavnEvTQadhEIiy1qL7n6Nja_UPggqeul_YHWBUwNxYqtUiINX9-PulV4kQ3CKEVdARkBEdkjeSGGUanvVhHAojOjFViHCF6KQKD5gCcsH6SiNvjER_-ElnB7OaEOoTxwfUSaALuZxDaS3DxwHwan1bqMWR6n2yvex5Oor2SPtMA8R_-Ukt5IcZ770S1uhoNCjyHniQshNX4w7YIRppV6vwh2R-dxuGy6V-XK2H0SAkqcbBMx_SYCsXRCxkqYd3MEh7MqIrPYoUUdpl8HRCAjxGiXo-DzUQ4niqyI0yxON0SrjP88Dg3lRCFkebHelK8T-Hi95nsxZPdi6KTm6q-DN70rI7UI7i-Gq2JdlPHZtLvcqvumsevCHZpuPK9jlsWsWHahxmUTvFH0Jo6D_48wp82A7UrqziSOBFz2sWH5ds1YdRJ4E9yXxqGdXnLbvTo__wAzPX8A.6wJmGsedX323sbFhFykRFDslJzdoTsFVXut7exz3YIFXMq2G5SeaVq2YDjRDoztryQa2BKRnK8r7y_IeXOGL_w'
+      result = run(test, { file_download_url: url, url: url, credential_strings: credential_strings})
+      expect(result.result).to eq('pass')
+    end
 
-    #it 'fails for a JWS payload that does not conform to the FHIR Vaccination bundle or Labs Bundle profile' do
-    #  credential_strings = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjRIVWIyYXJ2aFRTWHNzRW9NczJHNVRvRHBzWXZzajdoNXdUXzN6TkV0dWcifQ.fZBPS8QwEMW_y3htu40tlOa4CJ4EwT8X2UOaztroNFmStFCXfncnVlEEze0l7_3yZs5gQgAJQ4wnuduR04oGF6KsyrKEDGx3BCmaqr0s27quMpg1yDPE5YQgnz5igXNhVD4OqCgOhVa-DxebyJNgzN8-7WbTi_ZfjxnHyZo3FY2zcMhAe-zRRqPobupeUMdU6TgY_4g-JI-EuigLwdB0u59sT_hdG7Qj4lRyZsAgv_AsTJiIHjyxwWNwk9co0wq-RAJYNeLmVaMhjsGNvqbFJtCzmdGmpexJvSIcVm7aGR7lSsX0q2jbJhciL5sf0Put0S3PxkVgTaFfb5_1Vz7v.OGQvnvFETR68Uww__2rYP5Tk_zR9NHmD2rLf8o7wxB6UDfxlgzpK1rO5zfsdSvBEdN2L6pQWqkyqJ4ovG4i5lw'
-    #  result = run(test, { file_download_url: url, url: url, credential_strings: credential_strings})
-    #  expect(result.result).to eq('fail')
-    #end
+    it 'fails for a JWS payload that does not conform to the FHIR Vaccination bundle or Labs Bundle profile' do
+      credential_strings = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjRIVWIyYXJ2aFRTWHNzRW9NczJHNVRvRHBzWXZzajdoNXdUXzN6TkV0dWcifQ.fZBPS8QwEMW_y3htu40tlOa4CJ4EwT8X2UOaztroNFmStFCXfncnVlEEze0l7_3yZs5gQgAJQ4wnuduR04oGF6KsyrKEDGx3BCmaqr0s27quMpg1yDPE5YQgnz5igXNhVD4OqCgOhVa-DxebyJNgzN8-7WbTi_ZfjxnHyZo3FY2zcMhAe-zRRqPobupeUMdU6TgY_4g-JI-EuigLwdB0u59sT_hdG7Qj4lRyZsAgv_AsTJiIHjyxwWNwk9co0wq-RAJYNeLmVaMhjsGNvqbFJtCzmdGmpexJvSIcVm7aGR7lSsX0q2jbJhciL5sf0Put0S3PxkVgTaFfb5_1Vz7v.OGQvnvFETR68Uww__2rYP5Tk_zR9NHmD2rLf8o7wxB6UDfxlgzpK1rO5zfsdSvBEdN2L6pQWqkyqJ4ovG4i5lw'
+      result = run(test, { file_download_url: url, url: url, credential_strings: credential_strings})
+      expect(result.result).to eq('fail')
+    end
 
   end
 
