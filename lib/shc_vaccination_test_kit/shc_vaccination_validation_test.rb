@@ -43,6 +43,8 @@ module SHCVaccinationTestKit
 
       #TODO: what if bundle has an Immunization and an Observation?
 
+      #binding.pry
+
       assert bundle.type == "collection", "bundle.type shall be collection"
       #binding.pry
       if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) }
@@ -86,6 +88,7 @@ module SHCVaccinationTestKit
     end
 
     def validate_labs_bundle(bundle)
+      #binding.pry
       patient_entry_counter = 0
       lab_result_entry_counter = 0
       bundle.entry.each do |vaccination_bundle_entry|
