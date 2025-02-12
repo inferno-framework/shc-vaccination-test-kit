@@ -62,6 +62,7 @@ module SHCVaccinationTestKit
     end
 
     def validate_vaccination_bundle(bundle)
+      #binding.pry
       patient_entry_counter = 0
       immunization_entry_counter = 0
       bundle.entry.each do |vaccination_bundle_entry|

@@ -38,7 +38,7 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
     end
 
     it 'passes if the JWS payload conforms to the FHIR Vaccination Bundle profile' do
-      credential_strings = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjRIVWIyYXJ2aFRTWHNzRW9NczJHNVRvRHBzWXZzajdoNXdUXzN6TkV0dWcifQ.fZBLT8MwEIT_y3JN0jip1MZH1ANHJB4X1IPrbMkix678iFSq_HfWDQiEBL6NPfN5di9AIYCEIcaTXK2M08oMLkTZ1nUNBdjDEaTYtJ3Yduu2KWDSIC8QzycE-XKNBc6FUfk4oDJxqLTyfbhZRJkFY_72aTdRL7p_PTSOydK7iuQs7AvQHnu0kZR5SIc31DFXOg7kn9GH7JGwrupKMDTf3ibbG_yuDdoZw6nsLIBB_syzMCEZ8-QNGzwGl7xGmVfwJTLAqhEXrxrJcAzuUh-unFea0Oad7JQnB_uZix6IJ9mpmD8V3aYphSib7Q_m41LonkfjHjDn0K-3z_Yznw8.LntON-7UwMMrHyk2aC4kvdyX9GgPedr4-uOURH8mBg9MycnXIf9fd0OvTqe0-YiGTDhqYYhwx6rKHjyb7IKe6w'
+      credential_strings = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjRIVWIyYXJ2aFRTWHNzRW9NczJHNVRvRHBzWXZzajdoNXdUXzN6TkV0dWcifQ.1ZPNbtswEITfZXuVLFKyY0jHJIf0EhRI2kvhA0WtLQb8MUhKiBvo3buUU8RI4h6KoEB0ozg7nPkoPYEKARroY9w3RaGdFLp3ITYVYwwysO0WGr6u6rJcsXqdwSiheYJ42CM0P-exQHPBCB97FDr2Cyl8F74cF3lakM15nXSj6nj9V40yZrDql4jKWdhkID12aKMS-m5oH1DGFGnbK_8DfUiaBpYLtuBkmt5eDrbT-BIbpNOappIyAzLyB-pCDoPW370mgcfgBi-xSQj-LJKBFQaPWmGUpjG4dVokm50a0SYkN-hb2EwUs1XU41rEdCSvV2XO6pxdnDjeH-N8o2KUAqYpezcEfxUiRBGHMPcwe40RE-FRSKksXrlu1kjXKbubo4ZDiGhe7rjX64XzuyKhKYLqCjk-koGcJ6HkDKbNlMH-ORWZedyiR5tOP0VDIifl4Oet1PNemdmClaucUd2KbLWLt4Np0ScIZbVcXazfEvh6esHnMJT_FwP_GAw858sPxVB91q-h_EcMmzeC5x96ouc3.tLGLHXF-6J-RJf-FjvR-L8I759Cberj1wk6EqGO6U7Tn87wtbexzyhE5NfUDoVav6hxKZmcDhE40_9Zu1RcVGw'
       result = run(test, { file_download_url: url, url: url, credential_strings: credential_strings})
       expect(result.result).to eq('pass')
     end
@@ -57,7 +57,7 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
 
   end
 
-  
+
 
   # describe 'validate_fhir_bundle_test' do
   #   let(:subject) { SHCVaccinationTestKit::SHCVaccinationFHIRValidation.new }
