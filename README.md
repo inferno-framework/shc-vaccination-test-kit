@@ -1,26 +1,25 @@
-# SMART Health Cards Vaccination Test Kit
+# Inferno SMART Health Cards Vaccination Test Kit
 
-This is a collection of tests for the [SMART Health Cards: Vaccination & Testing
-Implementation
-Guide](http://build.fhir.org/ig/dvci/vaccine-credential-ig/branches/main/) using
-the [Inferno FHIR testing
-tool](https://github.com/inferno-community/inferno-core).
-
-**NOTE:** These tests are implemented against the `0.5.0-rc` build of the IG.
-
-It is highly recommended that you use [Docker](https://www.docker.com/) to run
-these tests so that you don't have to configure ruby and the HL7® FHIR®
-validator service.
+This is an [Inferno](https://inferno-framework.github.io/) test kit
+for the SMART Health Cards (SHC) Vaccination & Testing Implementation Guide [v1.0.0](https://build.fhir.org/ig/HL7/fhir-shc-vaccination-ig/index.html)
 
 ## Instructions
 
+It is highly recommended that you use [Docker](https://www.docker.com/) to run
+these tests.  This test kit requires at least 10 GB of memory are available to Docker.
+
 - Clone this repo.
-- Run `docker compose build` in this repo.
-- Run `docker compose pull` in this repo.
-- Run `docker compose run inferno bundle exec rake db:migrate` to set up the
-  database.
-- Run `docker compose up` in this repo.
-- Navigate to `http://localhost:4567`. The IPS test suite will be available.
+- Run `setup.sh` in this repo.
+- Run `run.sh` in this repo.
+- Navigate to `http://localhost`. The SMART Health Cards (SHC) Vaccination test suite will be available.
+
+See the [Inferno Documentation](https://inferno-framework.github.io/docs/)
+for more information on running Inferno.
+
+## Documentation
+- [Inferno documentation](https://inferno-framework.github.io/docs/)
+- [Ruby API documentation](https://inferno-framework.github.io/inferno-core/docs/)
+- [JSON API documentation](https://inferno-framework.github.io/inferno-core/api-docs/)
 
 ## License
 
