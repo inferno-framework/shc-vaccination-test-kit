@@ -69,7 +69,10 @@ module SHCVaccinationTestKit
       immunization_entry_counter = 0
       bundle.entry.each do |vaccination_bundle_entry|
         if vaccination_bundle_entry.resource.is_a?(FHIR::Patient)
-          #do we need to validate patient?
+          assert_valid_resource(
+            resource: vaccination_bundle_entry.resource,
+            profile_url: 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient'
+          )
           patient_entry_counter += 1
         else
           #for a vaccination bundle, if the entry is not a Patient, then it must be an Immunization
@@ -93,7 +96,10 @@ module SHCVaccinationTestKit
       lab_result_entry_counter = 0
       bundle.entry.each do |vaccination_bundle_entry|
         if vaccination_bundle_entry.resource.is_a?(FHIR::Patient)
-          #do we need to validate patient?
+          assert_valid_resource(
+            resource: vaccination_bundle_entry.resource,
+            profile_url: 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient'
+          )
           patient_entry_counter += 1
         else
           #for a labs bundle, if the entry is not a Patient, then it must be a lab result (Observation)
