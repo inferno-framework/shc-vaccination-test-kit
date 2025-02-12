@@ -71,7 +71,7 @@ module SHCVaccinationTestKit
         if vaccination_bundle_entry.resource.is_a?(FHIR::Patient)
           assert_valid_resource(
             resource: vaccination_bundle_entry.resource,
-            profile_url: 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient'
+            profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-patient-us-ad'
           )
           patient_entry_counter += 1
         else
@@ -98,7 +98,7 @@ module SHCVaccinationTestKit
         if vaccination_bundle_entry.resource.is_a?(FHIR::Patient)
           assert_valid_resource(
             resource: vaccination_bundle_entry.resource,
-            profile_url: 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient'
+            profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-patient-us-ad'
           )
           patient_entry_counter += 1
         else
@@ -106,7 +106,7 @@ module SHCVaccinationTestKit
           assert vaccination_bundle_entry.resource.is_a?(FHIR::Observation)
           assert_valid_resource(
             resource: vaccination_bundle_entry.resource,
-            profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad'
+            profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-infectious-disease-laboratory-result-observation-ad'
           )
           lab_result_entry_counter += 1
         end
