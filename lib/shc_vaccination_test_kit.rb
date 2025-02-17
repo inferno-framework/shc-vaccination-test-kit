@@ -16,7 +16,7 @@ module SHCVaccinationTestKit
     ].freeze
 
     fhir_resource_validator do
-      igs 'igs/hl7.fhir.uv.smarthealthcards-vaccination-1.0.0.tgz'
+      igs('igs/cards.smarthealth.terminology-0.1.0.tgz', 'igs/shc-vaccination-1.0.0-updated.tgz')
 
       exclude_message do |message|
         VALIDATION_MESSAGE_FILTERS.any? { |filter| filter.match? message.message }

@@ -24,6 +24,8 @@ Gem::Specification.new do |spec|
   spec.files = [
     Dir['lib/**/*.rb'],
     Dir['lib/**/*.json'],
+    Dir['lib/**/*.js'],
+    Dir['lib/**/*.html'],
     'LICENSE'
   ].flatten
 
