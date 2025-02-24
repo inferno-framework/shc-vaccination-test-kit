@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    shc_vaccination_test_kit (0.2.0)
+    shc_vaccination_test_kit (0.3.0)
       inferno_core (~> 0.6.4)
       smart_health_cards_test_kit (= 0.10.0)
 
