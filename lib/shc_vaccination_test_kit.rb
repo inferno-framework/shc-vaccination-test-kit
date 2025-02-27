@@ -2,6 +2,15 @@ require 'smart_health_cards_test_kit'
 require_relative 'shc_vaccination_test_kit/shc_vaccination_validation_test'
 require_relative 'shc_vaccination_test_kit/metadata'
 
+require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_covid19_laboratory_bundle_ad_group'
+require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_covid19_laboratory_result_observation_ad_group'
+require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_infectious_disease_laboratory_bundle_ad_group'
+require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_infectious_disease_laboratory_result_observation_ad_group'
+require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_patient_us_ad_group'
+require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_immunization_ad_group'
+require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_vaccination_bundle_ad_group'
+
+
 module SHCVaccinationTestKit
   class SHCVaccinationSuite < Inferno::TestSuite
     id 'shc_vaccination'
@@ -67,5 +76,13 @@ module SHCVaccinationTestKit
     add_shc_group :shc_file_download_group
     add_shc_group :shc_fhir_operation_group
     add_shc_group :shc_qr_code_group
+
+    group from: :v100_shc_covid19_laboratory_bundle_ad
+    group from: :v100_shc_covid19_laboratory_result_observation_ad
+    group from: :v100_shc_patient_us_ad
+    group from: :v100_shc_infectious_disease_laboratory_result_observation_ad
+    group from: :v100_shc_immunization_ad
+    group from: :v100_shc_infectious_disease_laboratory_bundle_ad
+    group from: :v100_shc_vaccination_bundle_ad
   end
 end
