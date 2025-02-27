@@ -1,0 +1,49 @@
+---
+:name: shc_vaccination_bundle_ad
+:class_name: ShcVaccinationBundleAdSequence
+:version: v1.0.0
+:reformatted_version: v100
+:resource: Bundle
+:profile_url: http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-bundle-ad
+:profile_name: Vaccination Bundle - Allowable Data
+:profile_version: 1.0.0
+:title: Bundle Vaccination - Allowable Data
+:short_description: Verify support for the server capabilities required by the Vaccination
+  Bundle - Allowable Data.
+:must_supports:
+  :extensions: []
+  :slices:
+  - :slice_id: Bundle.entry:patient
+    :slice_name: patient
+    :path: entry
+    :discriminator:
+      :type: type
+      :code: Patient
+  - :slice_id: Bundle.entry:immunization
+    :slice_name: immunization
+    :path: entry
+    :discriminator:
+      :type: type
+      :code: Immunization
+  :elements:
+  - :path: type
+    :fixed_value: collection
+  - :path: entry
+  - :path: entry.resource
+  - :path: entry:patient.fullUrl
+  - :path: entry:immunization.fullUrl
+:mandatory_elements:
+- Bundle.type
+- Bundle.link.relation
+- Bundle.link.url
+- Bundle.entry
+- Bundle.entry.request.method
+- Bundle.entry.request.url
+- Bundle.entry.response.status
+- Bundle.entry.fullUrl
+- Bundle.entry.resource
+:tests:
+- :id: v100_shc_vaccination_bundle_ad_must_support_test
+  :file_name: shc_vaccination_bundle_ad_must_support_test.rb
+:id: v100_shc_vaccination_bundle_ad
+:file_name: shc_vaccination_bundle_ad_group.rb

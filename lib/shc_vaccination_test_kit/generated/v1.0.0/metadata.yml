@@ -1,0 +1,420 @@
+---
+:ig_version: v1.0.0
+:groups:
+- :name: shc_covid19_laboratory_bundle_ad
+  :class_name: ShcCovid19LaboratoryBundleAdSequence
+  :version: v1.0.0
+  :reformatted_version: v100
+  :resource: Bundle
+  :profile_url: http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-ad
+  :profile_name: COVID-19-specific Laboratory Test Results Bundle - Allowable Data
+  :profile_version: 1.0.0
+  :title: Bundle COVID-19-specific Laboratory Test Results - Allowable Data
+  :short_description: Verify support for the server capabilities required by the COVID-19-specific
+    Laboratory Test Results Bundle - Allowable Data.
+  :must_supports:
+    :extensions: []
+    :slices:
+    - :slice_id: Bundle.entry:patient
+      :slice_name: patient
+      :path: entry
+      :discriminator:
+        :type: type
+        :code: Patient
+    - :slice_id: Bundle.entry:labResult
+      :slice_name: labResult
+      :path: entry
+      :discriminator:
+        :type: type
+        :code: Observation
+    :elements:
+    - :path: type
+      :fixed_value: collection
+    - :path: entry
+    - :path: entry.fullUrl
+    - :path: entry.resource
+    - :path: entry:patient.fullUrl
+    - :path: entry:labResult.fullUrl
+  :mandatory_elements:
+  - Bundle.type
+  - Bundle.link.relation
+  - Bundle.link.url
+  - Bundle.entry
+  - Bundle.entry.fullUrl
+  - Bundle.entry.request.method
+  - Bundle.entry.request.url
+  - Bundle.entry.response.status
+  - Bundle.entry.resource
+  :tests:
+  - :id: v100_shc_covid19_laboratory_bundle_ad_must_support_test
+    :file_name: shc_covid19_laboratory_bundle_ad_must_support_test.rb
+  :id: v100_shc_covid19_laboratory_bundle_ad
+  :file_name: shc_covid19_laboratory_bundle_ad_group.rb
+- :name: shc_covid19_laboratory_result_observation_ad
+  :class_name: ShcCovid19LaboratoryResultObservationAdSequence
+  :version: v1.0.0
+  :reformatted_version: v100
+  :resource: Observation
+  :profile_url: http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-result-observation-ad
+  :profile_name: COVID-19 Laboratory Result Observation Profile - Allowable Data
+  :profile_version: 1.0.0
+  :title: Observation COVID-19 Laboratory Result - Allowable Data
+  :short_description: Verify support for the server capabilities required by the COVID-19
+    Laboratory Result Observation Profile - Allowable Data.
+  :must_supports:
+    :extensions: []
+    :slices:
+    - :slice_id: Observation.component:specimen-supervision-status
+      :slice_name: specimen-supervision-status
+      :path: component
+      :discriminator:
+        :type: value
+        :values:
+        - :path: code
+          :value: 
+    :elements:
+    - :path: meta
+    - :path: meta.security
+    - :path: status
+    - :path: code
+    - :path: subject
+      :types:
+      - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-patient-general-ad
+    - :path: effective[x]
+    - :path: performer
+      :types:
+      - Reference
+    - :path: performer.display
+    - :path: value[x]
+    - :path: referenceRange
+  :mandatory_elements:
+  - Observation.status
+  - Observation.code
+  - Observation.subject
+  - Observation.subject.reference
+  - Observation.effective[x]
+  - Observation.performer.display
+  - Observation.value[x]
+  - Observation.component.code
+  - Observation.component.code.coding
+  - Observation.component.code.coding.system
+  - Observation.component.code.coding.code
+  - Observation.component.value[x]
+  - Observation.component.value[x].coding
+  - Observation.component.value[x].coding.system
+  - Observation.component.value[x].coding.code
+  :tests:
+  - :id: v100_shc_covid19_laboratory_result_observation_ad_must_support_test
+    :file_name: shc_covid19_laboratory_result_observation_ad_must_support_test.rb
+  :id: v100_shc_covid19_laboratory_result_observation_ad
+  :file_name: shc_covid19_laboratory_result_observation_ad_group.rb
+- :name: shc_patient_us_ad
+  :class_name: ShcPatientUsAdSequence
+  :version: v1.0.0
+  :reformatted_version: v100
+  :resource: Patient
+  :profile_url: http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-patient-us-ad
+  :profile_name: Patient Profile - United States - Allowable Data
+  :profile_version: 1.0.0
+  :title: Patient - United States - Allowable Data
+  :short_description: Verify support for the server capabilities required by the Patient
+    Profile - United States - Allowable Data.
+  :must_supports:
+    :extensions: []
+    :slices: []
+    :elements:
+    - :path: name
+    - :path: name.family
+    - :path: name.given
+    - :path: name.prefix
+    - :path: name.suffix
+    - :path: birthDate
+  :mandatory_elements:
+  - Patient.name
+  - Patient.communication.language
+  - Patient.link.other
+  - Patient.link.type
+  :tests:
+  - :id: v100_shc_patient_us_ad_must_support_test
+    :file_name: shc_patient_us_ad_must_support_test.rb
+  :id: v100_shc_patient_us_ad
+  :file_name: shc_patient_us_ad_group.rb
+- :name: shc_covid19_laboratory_result_observation_dm
+  :class_name: ShcCovid19LaboratoryResultObservationDmSequence
+  :version: v1.0.0
+  :reformatted_version: v100
+  :resource: Observation
+  :profile_url: http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-result-observation-dm
+  :profile_name: COVID-19 Laboratory Result Observation Profile - Data Minimization
+  :profile_version: 1.0.0
+  :title: Observation COVID-19 Laboratory Result - Data Minimization
+  :short_description: Verify support for the server capabilities required by the COVID-19
+    Laboratory Result Observation Profile - Data Minimization.
+  :must_supports:
+    :extensions: []
+    :slices:
+    - :slice_id: Observation.component:specimen-supervision-status
+      :slice_name: specimen-supervision-status
+      :path: component
+      :discriminator:
+        :type: value
+        :values:
+        - :path: code
+          :value: 
+    :elements:
+    - :path: meta
+    - :path: meta.security
+    - :path: status
+    - :path: code
+    - :path: subject
+      :types:
+      - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-patient-general-ad
+    - :path: effective[x]
+    - :path: performer
+      :types:
+      - Reference
+    - :path: performer.display
+    - :path: value[x]
+    - :path: referenceRange
+  :mandatory_elements:
+  - Observation.status
+  - Observation.code
+  - Observation.code.coding
+  - Observation.code.coding.system
+  - Observation.code.coding.code
+  - Observation.subject
+  - Observation.subject.reference
+  - Observation.effective[x]
+  - Observation.performer.display
+  - Observation.value[x]
+  - Observation.value[x].coding
+  - Observation.value[x].coding.system
+  - Observation.value[x].coding.code
+  - Observation.component.code
+  - Observation.component.code.coding
+  - Observation.component.code.coding.system
+  - Observation.component.code.coding.code
+  - Observation.component.value[x]
+  - Observation.component.value[x].coding
+  - Observation.component.value[x].coding.system
+  - Observation.component.value[x].coding.code
+  :tests:
+  - :id: v100_shc_covid19_laboratory_result_observation_dm_must_support_test
+    :file_name: shc_covid19_laboratory_result_observation_dm_must_support_test.rb
+  :id: v100_shc_covid19_laboratory_result_observation_dm
+  :file_name: shc_covid19_laboratory_result_observation_dm_group.rb
+- :name: shc_infectious_disease_laboratory_result_observation_ad
+  :class_name: ShcInfectiousDiseaseLaboratoryResultObservationAdSequence
+  :version: v1.0.0
+  :reformatted_version: v100
+  :resource: Observation
+  :profile_url: http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-infectious-disease-laboratory-result-observation-ad
+  :profile_name: Generic Laboratory Result Observation Profile - Allowable Data
+  :profile_version: 1.0.0
+  :title: Observation Generic Laboratory Result - Allowable Data
+  :short_description: Verify support for the server capabilities required by the Generic
+    Laboratory Result Observation Profile - Allowable Data.
+  :must_supports:
+    :extensions: []
+    :slices:
+    - :slice_id: Observation.component:specimen-supervision-status
+      :slice_name: specimen-supervision-status
+      :path: component
+      :discriminator:
+        :type: value
+        :values:
+        - :path: code
+          :value: 
+    :elements:
+    - :path: meta
+    - :path: meta.security
+    - :path: status
+    - :path: code
+    - :path: subject
+      :types:
+      - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-patient-general-ad
+    - :path: effective[x]
+    - :path: performer
+      :types:
+      - Reference
+    - :path: performer.display
+    - :path: value[x]
+    - :path: referenceRange
+  :mandatory_elements:
+  - Observation.status
+  - Observation.code
+  - Observation.subject
+  - Observation.subject.reference
+  - Observation.effective[x]
+  - Observation.performer.display
+  - Observation.value[x]
+  - Observation.component.code
+  - Observation.component.code.coding
+  - Observation.component.code.coding.system
+  - Observation.component.code.coding.code
+  - Observation.component.value[x]
+  - Observation.component.value[x].coding
+  - Observation.component.value[x].coding.system
+  - Observation.component.value[x].coding.code
+  :tests:
+  - :id: v100_shc_infectious_disease_laboratory_result_observation_ad_must_support_test
+    :file_name: shc_infectious_disease_laboratory_result_observation_ad_must_support_test.rb
+  :id: v100_shc_infectious_disease_laboratory_result_observation_ad
+  :file_name: shc_infectious_disease_laboratory_result_observation_ad_group.rb
+- :name: shc_vaccination_ad
+  :class_name: ShcVaccinationAdSequence
+  :version: v1.0.0
+  :reformatted_version: v100
+  :resource: Immunization
+  :profile_url: http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad
+  :profile_name: Vaccination Profile - Allowable Data
+  :profile_version: 1.0.0
+  :title: Vaccination - Allowable Data
+  :short_description: Verify support for the server capabilities required by the Vaccination
+    Profile - Allowable Data.
+  :must_supports:
+    :extensions: []
+    :slices: []
+    :elements:
+    - :path: meta
+    - :path: meta.security
+    - :path: status
+      :fixed_value: completed
+    - :path: vaccineCode
+    - :path: vaccineCode.coding
+    - :path: patient
+      :types:
+      - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-patient-general-ad
+    - :path: occurrence[x]
+    - :path: lotNumber
+    - :path: performer
+    - :path: performer.actor
+      :types:
+      - Reference
+    - :path: performer.actor.display
+    - :path: isSubpotent
+  :mandatory_elements:
+  - Immunization.status
+  - Immunization.vaccineCode
+  - Immunization.vaccineCode.coding
+  - Immunization.vaccineCode.coding.system
+  - Immunization.patient
+  - Immunization.patient.reference
+  - Immunization.occurrence[x]
+  - Immunization.manufacturer.identifier.system
+  - Immunization.manufacturer.identifier.value
+  - Immunization.performer.actor
+  - Immunization.performer.actor.display
+  - Immunization.protocolApplied.doseNumber[x]
+  :tests:
+  - :id: v100_immunization_must_support_test
+    :file_name: immunization_must_support_test.rb
+  :id: v100_immunization
+  :file_name: immunization_group.rb
+- :name: shc_infectious_disease_laboratory_bundle_ad
+  :class_name: ShcInfectiousDiseaseLaboratoryBundleAdSequence
+  :version: v1.0.0
+  :reformatted_version: v100
+  :resource: Bundle
+  :profile_url: http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-infectious-disease-laboratory-bundle-ad
+  :profile_name: Infectious Disease (Generic) Laboratory Test Results Bundle - Allowable
+    Data
+  :profile_version: 1.0.0
+  :title: Bundle Infectious Disease (Generic) Laboratory Test Results - Allowable
+    Data
+  :short_description: Verify support for the server capabilities required by the Infectious
+    Disease (Generic) Laboratory Test Results Bundle - Allowable Data.
+  :must_supports:
+    :extensions: []
+    :slices:
+    - :slice_id: Bundle.entry:patient
+      :slice_name: patient
+      :path: entry
+      :discriminator:
+        :type: type
+        :code: Patient
+    - :slice_id: Bundle.entry:labResult
+      :slice_name: labResult
+      :path: entry
+      :discriminator:
+        :type: type
+        :code: Observation
+    :elements:
+    - :path: type
+      :fixed_value: collection
+    - :path: entry
+    - :path: entry.fullUrl
+    - :path: entry.resource
+    - :path: entry:patient.fullUrl
+    - :path: entry:labResult.fullUrl
+  :mandatory_elements:
+  - Bundle.type
+  - Bundle.link.relation
+  - Bundle.link.url
+  - Bundle.entry
+  - Bundle.entry.fullUrl
+  - Bundle.entry.request.method
+  - Bundle.entry.request.url
+  - Bundle.entry.response.status
+  - Bundle.entry.resource
+  :tests:
+  - :id: v100_shc_infectious_disease_laboratory_bundle_ad_must_support_test
+    :file_name: shc_infectious_disease_laboratory_bundle_ad_must_support_test.rb
+  :id: v100_shc_infectious_disease_laboratory_bundle_ad
+  :file_name: shc_infectious_disease_laboratory_bundle_ad_group.rb
+- :name: shc_vaccination_bundle_ad
+  :class_name: ShcVaccinationBundleAdSequence
+  :version: v1.0.0
+  :reformatted_version: v100
+  :resource: Bundle
+  :profile_url: http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-bundle-ad
+  :profile_name: Vaccination Bundle - Allowable Data
+  :profile_version: 1.0.0
+  :title: Bundle Vaccination - Allowable Data
+  :short_description: Verify support for the server capabilities required by the Vaccination
+    Bundle - Allowable Data.
+  :must_supports:
+    :extensions: []
+    :slices:
+    - :slice_id: Bundle.entry:patient
+      :slice_name: patient
+      :path: entry
+      :discriminator:
+        :type: type
+        :code: Patient
+    - :slice_id: Bundle.entry:immunization
+      :slice_name: immunization
+      :path: entry
+      :discriminator:
+        :type: type
+        :code: Immunization
+    :elements:
+    - :path: type
+      :fixed_value: collection
+    - :path: entry
+    - :path: entry.resource
+    - :path: entry:patient.fullUrl
+    - :path: entry:immunization.fullUrl
+  :mandatory_elements:
+  - Bundle.type
+  - Bundle.link.relation
+  - Bundle.link.url
+  - Bundle.entry
+  - Bundle.entry.request.method
+  - Bundle.entry.request.url
+  - Bundle.entry.response.status
+  - Bundle.entry.fullUrl
+  - Bundle.entry.resource
+  :tests:
+  - :id: v100_shc_vaccination_bundle_ad_must_support_test
+    :file_name: shc_vaccination_bundle_ad_must_support_test.rb
+  :id: v100_shc_vaccination_bundle_ad
+  :file_name: shc_vaccination_bundle_ad_group.rb
