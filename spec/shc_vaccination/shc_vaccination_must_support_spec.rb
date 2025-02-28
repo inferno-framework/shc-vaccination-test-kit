@@ -6,7 +6,7 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
     Inferno::Repositories::TestSessions.new.create(test_suite_id: suite.id)
   end
   let(:request_repo) { Inferno::Repositories::Requests.new }
-  let(:group) { suite.groups.find { |g| g.id.include?('shc_covid19_laboratory_bundle_ad')} }
+  let(:group) { suite.groups.find { |g| g.id.include?('shc_file_download_group')} }
 
   def run(runnable, inputs = {})
     test_run_params = { test_session_id: test_session.id }.merge(runnable.reference_hash)
@@ -101,13 +101,13 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
 
     it 'passes if the input is contains all Must Supports' do
       allow_any_instance_of(test).to receive(:all_scratch_resources).and_return([fhir_bundle_example])
-      result = run(test)
+      result = run(test, {file_download_url: 'a'}) #does not run without expected input for test
       expect(result.result).to eq('pass')
     end
 
     it 'skips if the input is missing Must Supports' do
       allow_any_instance_of(test).to receive(:all_scratch_resources).and_return([fhir_bundle_incomplete_example])
-      result = run(test)
+      result = run(test, {file_download_url: 'a'})
       expect(result.result).to eq('skip')
     end
     # it 'passes if the input is an array of multiple bundles that all conform to the FHIR Bundle profile' do

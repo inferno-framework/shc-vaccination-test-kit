@@ -70,6 +70,13 @@ module SHCVaccinationTestKit
       group from: group_id do
         children.reject! { |test| test.id.include?('shc_fhir_validation_test') }
         test from: :shc_vaccination_validation_test
+        test from: :v100_shc_covid19_laboratory_bundle_ad_must_support_test
+        test from: :v100_shc_covid19_laboratory_result_observation_ad_must_support_test
+        test from: :v100_shc_patient_us_ad_must_support_test
+        test from: :v100_shc_infectious_disease_laboratory_result_observation_ad_must_support_test
+        test from: :v100_shc_immunization_ad_must_support_test
+        test from: :v100_shc_infectious_disease_laboratory_bundle_ad_must_support_test
+        test from: :v100_shc_vaccination_bundle_ad_must_support_test
       end
     end
 
@@ -77,12 +84,5 @@ module SHCVaccinationTestKit
     add_shc_group :shc_fhir_operation_group
     add_shc_group :shc_qr_code_group
 
-    group from: :v100_shc_covid19_laboratory_bundle_ad
-    group from: :v100_shc_covid19_laboratory_result_observation_ad
-    group from: :v100_shc_patient_us_ad
-    group from: :v100_shc_infectious_disease_laboratory_result_observation_ad
-    group from: :v100_shc_immunization_ad
-    group from: :v100_shc_infectious_disease_laboratory_bundle_ad
-    group from: :v100_shc_vaccination_bundle_ad
   end
 end
