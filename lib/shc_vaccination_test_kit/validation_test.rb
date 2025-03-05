@@ -7,7 +7,6 @@ module SHCVaccinationTestKit
                                 profile_url,
                                 profile_version,
                                 skip_if_empty: true)
-
       skip_if skip_if_empty && resources.blank?,
               "No #{resource_type} resources conforming to the #{profile_url} profile were returned"
 

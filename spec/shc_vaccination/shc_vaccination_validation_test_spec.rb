@@ -250,10 +250,10 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
       fhir_bundles = [ fhir_bundle_example, immunization_bundle_example ].to_json
       result = run(test, { file_download_url: url, url: url, fhir_bundles: fhir_bundles})
       expect(result.result).to eq('pass')
-      expect(test_scratch[:shc_vaccination_bundle_ad_resources]).to include(immunization_bundle_example)
-      expect(test_scratch[:shc_vaccination_bundle_ad_resources]).not_to include(fhir_bundle_example)
-      expect(test_scratch[:shc_infectious_disease_laboratory_bundle_ad_resources]).to include(fhir_bundle_example)
-      expect(test_scratch[:shc_infectious_disease_laboratory_bundle_ad_resources]).not_to include(immunization_bundle_example)
+      expect(test_scratch[:shc_vaccination_bundle_ad_resources][:all]).to include(immunization_bundle_example)
+      expect(test_scratch[:shc_vaccination_bundle_ad_resources][:all]).not_to include(fhir_bundle_example)
+      expect(test_scratch[:shc_infectious_disease_laboratory_bundle_ad_resources][:all]).to include(fhir_bundle_example)
+      expect(test_scratch[:shc_infectious_disease_laboratory_bundle_ad_resources][:all]).not_to include(immunization_bundle_example)
     end
 
   end

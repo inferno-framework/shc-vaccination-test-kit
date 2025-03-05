@@ -110,6 +110,7 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
       result = run(test, {file_download_url: 'a'})
       expect(result.result).to eq('skip')
     end
+    
     # it 'passes if the input is an array of multiple bundles that all conform to the FHIR Bundle profile' do
     #   fhir_bundles = []
     #   fhir_bundles.append(fhir_bundle_corrina_rowe.to_hash)
