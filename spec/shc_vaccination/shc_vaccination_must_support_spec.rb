@@ -35,7 +35,7 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
           type: "collection",
           entry: [{
             fullUrl: "resource:0",
-            resource: {
+            resource: FHIR::Patient.new(
               resourceType: "Patient",
               name: [{
                 family: "Anyperson",
@@ -43,11 +43,11 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
                 "T."]
               }],
               birthDate: "1951-01-20"
-            }
+            )
           },
           {
             fullUrl: "resource:1",
-            resource: {
+            resource: FHIR::Observation.new(
               resourceType: "Observation",
               meta: {
                 security: [{
@@ -75,7 +75,7 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
                   code: "260373001"
                 }]
               }
-            }
+            )
           }]
       )
     end
@@ -86,7 +86,7 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
           type: "collection",
           entry: [{
             fullUrl: "resource:0",
-            resource: {
+            resource: FHIR::Patient
               resourceType: "Patient",
               name: [{
                 family: "Anyperson",
@@ -101,6 +101,7 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
 
     it 'passes if the input is contains all Must Supports' do
       allow_any_instance_of(test).to receive(:all_scratch_resources).and_return([fhir_bundle_example])
+      binding.pry
       result = run(test, {file_download_url: 'a'}) #does not run without expected input for test
       expect(result.result).to eq('pass')
     end
