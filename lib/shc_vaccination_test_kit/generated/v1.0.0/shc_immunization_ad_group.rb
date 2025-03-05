@@ -1,4 +1,5 @@
 require_relative 'shc_immunization_ad/shc_immunization_ad_must_support_test'
+require_relative 'shc_immunization_ad/shc_immunization_ad_validation_test'
 
 module SHCVaccinationTestKit
   module V100
@@ -69,7 +70,8 @@ read succeeds.
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'immunization', 'metadata.yml'), aliases: true))
       end
       
-        test from: :v100_shc_immunization_ad_must_support_test
+      test from: :v100_shc_immunization_must_support_test
+      test from: :v100_shc_immunization_validation_test
     end
   end
 end

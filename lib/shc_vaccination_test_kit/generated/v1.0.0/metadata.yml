@@ -48,6 +48,8 @@
   :tests:
   - :id: v100_shc_covid19_laboratory_bundle_ad_must_support_test
     :file_name: shc_covid19_laboratory_bundle_ad_must_support_test.rb
+  - :id: v100_shc_covid19_laboratory_bundle_ad_validation_test
+    :file_name: shc_covid19_laboratory_bundle_ad_validation_test.rb
   :id: v100_shc_covid19_laboratory_bundle_ad
   :file_name: shc_covid19_laboratory_bundle_ad_group.rb
 - :name: shc_covid19_laboratory_result_observation_ad
@@ -108,6 +110,8 @@
   :tests:
   - :id: v100_shc_covid19_laboratory_result_observation_ad_must_support_test
     :file_name: shc_covid19_laboratory_result_observation_ad_must_support_test.rb
+  - :id: v100_shc_covid19_laboratory_result_observation_ad_validation_test
+    :file_name: shc_covid19_laboratory_result_observation_ad_validation_test.rb
   :id: v100_shc_covid19_laboratory_result_observation_ad
   :file_name: shc_covid19_laboratory_result_observation_ad_group.rb
 - :name: shc_patient_us_ad
@@ -139,74 +143,10 @@
   :tests:
   - :id: v100_shc_patient_us_ad_must_support_test
     :file_name: shc_patient_us_ad_must_support_test.rb
+  - :id: v100_shc_patient_us_ad_validation_test
+    :file_name: shc_patient_us_ad_validation_test.rb
   :id: v100_shc_patient_us_ad
   :file_name: shc_patient_us_ad_group.rb
-- :name: shc_covid19_laboratory_result_observation_dm
-  :class_name: ShcCovid19LaboratoryResultObservationDmSequence
-  :version: v1.0.0
-  :reformatted_version: v100
-  :resource: Observation
-  :profile_url: http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-result-observation-dm
-  :profile_name: COVID-19 Laboratory Result Observation Profile - Data Minimization
-  :profile_version: 1.0.0
-  :title: Observation COVID-19 Laboratory Result - Data Minimization
-  :short_description: Verify support for the server capabilities required by the COVID-19
-    Laboratory Result Observation Profile - Data Minimization.
-  :must_supports:
-    :extensions: []
-    :slices:
-    - :slice_id: Observation.component:specimen-supervision-status
-      :slice_name: specimen-supervision-status
-      :path: component
-      :discriminator:
-        :type: value
-        :values:
-        - :path: code
-          :value: 
-    :elements:
-    - :path: meta
-    - :path: meta.security
-    - :path: status
-    - :path: code
-    - :path: subject
-      :types:
-      - Reference
-      :target_profiles:
-      - http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-patient-general-ad
-    - :path: effective[x]
-    - :path: performer
-      :types:
-      - Reference
-    - :path: performer.display
-    - :path: value[x]
-    - :path: referenceRange
-  :mandatory_elements:
-  - Observation.status
-  - Observation.code
-  - Observation.code.coding
-  - Observation.code.coding.system
-  - Observation.code.coding.code
-  - Observation.subject
-  - Observation.subject.reference
-  - Observation.effective[x]
-  - Observation.performer.display
-  - Observation.value[x]
-  - Observation.value[x].coding
-  - Observation.value[x].coding.system
-  - Observation.value[x].coding.code
-  - Observation.component.code
-  - Observation.component.code.coding
-  - Observation.component.code.coding.system
-  - Observation.component.code.coding.code
-  - Observation.component.value[x]
-  - Observation.component.value[x].coding
-  - Observation.component.value[x].coding.system
-  - Observation.component.value[x].coding.code
-  :tests:
-  - :id: v100_shc_covid19_laboratory_result_observation_dm_must_support_test
-    :file_name: shc_covid19_laboratory_result_observation_dm_must_support_test.rb
-  :id: v100_shc_covid19_laboratory_result_observation_dm
-  :file_name: shc_covid19_laboratory_result_observation_dm_group.rb
 - :name: shc_infectious_disease_laboratory_result_observation_ad
   :class_name: ShcInfectiousDiseaseLaboratoryResultObservationAdSequence
   :version: v1.0.0
@@ -265,6 +205,8 @@
   :tests:
   - :id: v100_shc_infectious_disease_laboratory_result_observation_ad_must_support_test
     :file_name: shc_infectious_disease_laboratory_result_observation_ad_must_support_test.rb
+  - :id: v100_shc_infectious_disease_laboratory_result_observation_ad_validation_test
+    :file_name: shc_infectious_disease_laboratory_result_observation_ad_validation_test.rb
   :id: v100_shc_infectious_disease_laboratory_result_observation_ad
   :file_name: shc_infectious_disease_laboratory_result_observation_ad_group.rb
 - :name: shc_vaccination_ad
@@ -317,6 +259,8 @@
   :tests:
   - :id: v100_immunization_must_support_test
     :file_name: immunization_must_support_test.rb
+  - :id: v100_immunization_validation_test
+    :file_name: immunization_validation_test.rb
   :id: v100_immunization
   :file_name: immunization_group.rb
 - :name: shc_infectious_disease_laboratory_bundle_ad
@@ -368,6 +312,8 @@
   :tests:
   - :id: v100_shc_infectious_disease_laboratory_bundle_ad_must_support_test
     :file_name: shc_infectious_disease_laboratory_bundle_ad_must_support_test.rb
+  - :id: v100_shc_infectious_disease_laboratory_bundle_ad_validation_test
+    :file_name: shc_infectious_disease_laboratory_bundle_ad_validation_test.rb
   :id: v100_shc_infectious_disease_laboratory_bundle_ad
   :file_name: shc_infectious_disease_laboratory_bundle_ad_group.rb
 - :name: shc_vaccination_bundle_ad
@@ -416,5 +362,7 @@
   :tests:
   - :id: v100_shc_vaccination_bundle_ad_must_support_test
     :file_name: shc_vaccination_bundle_ad_must_support_test.rb
+  - :id: v100_shc_vaccination_bundle_ad_validation_test
+    :file_name: shc_vaccination_bundle_ad_validation_test.rb
   :id: v100_shc_vaccination_bundle_ad
   :file_name: shc_vaccination_bundle_ad_group.rb

@@ -1,4 +1,5 @@
 require_relative 'shc_infectious_disease_laboratory_bundle_ad/shc_infectious_disease_laboratory_bundle_ad_must_support_test'
+require_relative 'shc_infectious_disease_laboratory_bundle_ad/shc_infectious_disease_laboratory_bundle_ad_validation_test'
 
 module SHCVaccinationTestKit
   module V100
@@ -70,6 +71,7 @@ read succeeds.
       end
       
         test from: :v100_shc_infectious_disease_laboratory_bundle_ad_must_support_test
+        test from: :v100_shc_infectious_disease_laboratory_bundle_ad_validation_test
     end
   end
 end

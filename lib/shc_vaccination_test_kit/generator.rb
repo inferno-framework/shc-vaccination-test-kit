@@ -32,7 +32,7 @@ module SHCVaccinationTestKit
       load_ig_package
       extract_metadata
       generate_must_support_tests
-      # generate_validation_tests
+      generate_validation_tests
       generate_groups
       generate_suites
 

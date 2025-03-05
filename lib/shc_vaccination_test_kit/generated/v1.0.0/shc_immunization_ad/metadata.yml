@@ -47,7 +47,9 @@
 - Immunization.performer.actor.display
 - Immunization.protocolApplied.doseNumber[x]
 :tests:
-- :id: v100_immunization_must_support_test
-  :file_name: immunization_must_support_test.rb
-:id: v100_immunization
-:file_name: immunization_group.rb
+- :id: v100_shc_immunization_ad_must_support_test
+  :file_name: shc_immunization_ad_must_support_test.rb
+- :id: v100_shc_immunization_ad_validation_test
+  :file_name: shc_immunization_ad_validation_test.rb
+:id: v100_shc_immunization_ad
+:file_name: shc_immunization_ad_group.rb

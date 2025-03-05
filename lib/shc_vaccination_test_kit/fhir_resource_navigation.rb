@@ -42,7 +42,6 @@ module SHCVaccinationTestKit
         child.present? || child == false
       end
       return nil if no_elements_present
-
       remaining_path = path_segments.join('.')
       elements.each do |element|
         child = get_next_value(element, segment)
@@ -122,7 +121,7 @@ module SHCVaccinationTestKit
               slice.is_a? String
             else
               if slice.is_a? FHIR::Bundle::Entry
-                slice.source_hash[:resource][:resourceType] == discriminator[:code]
+                slice.resource.resourceType == discriminator[:code]
               else
                 slice.is_a? FHIR.const_get(discriminator[:code])
               end

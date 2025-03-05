@@ -6,7 +6,7 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
     Inferno::Repositories::TestSessions.new.create(test_suite_id: suite.id)
   end
   let(:request_repo) { Inferno::Repositories::Requests.new }
-  let(:group) { suite.groups.find { |g| g.id.include?('shc_file_download_group')} }
+  let(:group) { suite.groups.first.groups.find { |g| g.id.include?('shc_vaccination-Group01-shc_must_support_group')} }
 
   def run(runnable, inputs = {})
     test_run_params = { test_session_id: test_session.id }.merge(runnable.reference_hash)
@@ -19,7 +19,7 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
 
   describe 'health_card_fhir_must_support_test' do
 
-    let(:test) { group.tests.find { |t| t.id.include?('v100_shc_covid19_laboratory_bundle_ad_must_support_test')} }
+    let(:test) { group.tests.find { |t| t.id.include?('shc_vaccination-Group01-shc_must_support_group-v100_shc_covid19_laboratory_bundle_ad_must_support_test')} }
     let(:url) { 'http://example.com/hc' }
     let(:operation_outcome_success) do
       {
@@ -86,7 +86,7 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
           type: "collection",
           entry: [{
             fullUrl: "resource:0",
-            resource: FHIR::Patient
+            resource: FHIR::Patient.new(
               resourceType: "Patient",
               name: [{
                 family: "Anyperson",
@@ -94,14 +94,13 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
                 "T."]
               }],
               birthDate: "1951-01-20"
-            }
+            )
           }]
       )
     end
 
     it 'passes if the input is contains all Must Supports' do
       allow_any_instance_of(test).to receive(:all_scratch_resources).and_return([fhir_bundle_example])
-      binding.pry
       result = run(test, {file_download_url: 'a'}) #does not run without expected input for test
       expect(result.result).to eq('pass')
     end

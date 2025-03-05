@@ -46,5 +46,7 @@
 :tests:
 - :id: v100_shc_covid19_laboratory_bundle_ad_must_support_test
   :file_name: shc_covid19_laboratory_bundle_ad_must_support_test.rb
+- :id: v100_shc_covid19_laboratory_bundle_ad_validation_test
+  :file_name: shc_covid19_laboratory_bundle_ad_validation_test.rb
 :id: v100_shc_covid19_laboratory_bundle_ad
 :file_name: shc_covid19_laboratory_bundle_ad_group.rb

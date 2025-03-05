@@ -13,7 +13,6 @@ module SHCVaccinationTestKit
 
     def perform_must_support_test(resources)
       skip_if resources.blank?, "No #{resource_type} resources were found"
-
       missing_elements(resources)
       missing_slices(resources)
       missing_extensions(resources)
@@ -193,7 +192,7 @@ module SHCVaccinationTestKit
             element.is_a? String
           else
             if element.is_a? FHIR::Bundle::Entry
-              element.source_hash[:resource][:resourceType] == discriminator[:code]
+              element.resource.resourceType == discriminator[:code]
             else
               element.is_a? FHIR.const_get(discriminator[:code])
             end

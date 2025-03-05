@@ -2,14 +2,8 @@ require 'smart_health_cards_test_kit'
 require_relative 'shc_vaccination_test_kit/shc_vaccination_validation_test'
 require_relative 'shc_vaccination_test_kit/metadata'
 
-require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_covid19_laboratory_bundle_ad_group'
-require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_covid19_laboratory_result_observation_ad_group'
-require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_infectious_disease_laboratory_bundle_ad_group'
-require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_infectious_disease_laboratory_result_observation_ad_group'
-require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_patient_us_ad_group'
-require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_immunization_ad_group'
-require_relative 'shc_vaccination_test_kit/generated/v1.0.0/shc_vaccination_bundle_ad_group'
-
+require_relative 'shc_vaccination_test_kit/ms_and_validation/resource_must_support_group'
+require_relative 'shc_vaccination_test_kit/ms_and_validation/resource_validation_group'
 
 module SHCVaccinationTestKit
   class SHCVaccinationSuite < Inferno::TestSuite
@@ -67,16 +61,14 @@ module SHCVaccinationTestKit
     # end
 
     def self.add_shc_group(group_id)
-      group from: group_id do
-        children.reject! { |test| test.id.include?('shc_fhir_validation_test') }
-        test from: :shc_vaccination_validation_test
-        test from: :v100_shc_covid19_laboratory_bundle_ad_must_support_test
-        test from: :v100_shc_covid19_laboratory_result_observation_ad_must_support_test
-        test from: :v100_shc_patient_us_ad_must_support_test
-        test from: :v100_shc_infectious_disease_laboratory_result_observation_ad_must_support_test
-        test from: :v100_shc_immunization_ad_must_support_test
-        test from: :v100_shc_infectious_disease_laboratory_bundle_ad_must_support_test
-        test from: :v100_shc_vaccination_bundle_ad_must_support_test
+      group do
+        title "Vaccination #{group_id.to_s.split('_').map(&:capitalize).join(' ')}"
+        group from: group_id do
+          children.reject! { |test| test.id.include?('shc_fhir_validation_test') }
+          test from: :shc_vaccination_validation_test
+        end
+        group from: :shc_validation_group
+        group from: :shc_must_support_group
       end
     end
 

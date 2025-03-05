@@ -28,5 +28,7 @@
 :tests:
 - :id: v100_shc_patient_us_ad_must_support_test
   :file_name: shc_patient_us_ad_must_support_test.rb
+- :id: v100_shc_patient_us_ad_validation_test
+  :file_name: shc_patient_us_ad_validation_test.rb
 :id: v100_shc_patient_us_ad
 :file_name: shc_patient_us_ad_group.rb
