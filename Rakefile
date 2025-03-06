@@ -5,6 +5,15 @@ begin
 rescue LoadError # rubocop:disable Lint/SuppressedException
 end
 
+namespace :shc do
+  desc 'Run Generator'
+  task :generate do
+    require_relative 'lib/shc_vaccination_test_kit/generator'
+
+    SHCVaccinationTestKit::Generator.generate
+  end
+end
+
 namespace :db do
   desc 'Apply changes to the database'
   task :migrate do

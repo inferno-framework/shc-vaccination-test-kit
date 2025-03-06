@@ -9,31 +9,18 @@ module SHCVaccinationTestKit
     description %(
       SMART Health Card (SHC) for vaccination records payload SHALL be a valid FHIR Bundle resource
     )
-    input :credential_strings
+    input :fhir_bundles
 
     run do
+      skip_if fhir_bundles.blank?, 'No FHIR bundles received'
 
-      skip_if credential_strings.blank?, 'No Verifiable Credentials received'
+      assert_valid_json(fhir_bundles)
+      bundle_array = JSON.parse(fhir_bundles)
 
-      credential_strings.split(',').each do |credential|
+      skip_if bundle_array.blank?, 'No FHIR bundles received'
 
-        jws = SmartHealthCardsTestKit::Utils::JWS.from_jws(credential)
-        payload = payload_from_jws(jws)
-
-        vc = payload['vc']
-        assert vc.is_a?(Hash), "Expected 'vc' claim to be a JSON object, but found #{vc.class}"
-
-        subject = vc['credentialSubject']
-        assert subject.is_a?(Hash), "Expected 'vc.credentialSubject' to be a JSON object, but found #{subject.class}"
-
-        raw_bundle = subject['fhirBundle']
-        assert raw_bundle.is_a?(Hash), "Expected 'vc.fhirBundle' to be a JSON object, but found #{raw_bundle.class}"
-
-        bundle = FHIR::Bundle.new(raw_bundle)
-
-        validate_fhir_bundle(bundle)
-
-
+      bundle_array.each do |bundle|
+        validate_fhir_bundle(FHIR::Bundle.new(bundle))
       end
     end
 
@@ -43,10 +30,7 @@ module SHCVaccinationTestKit
 
       #TODO: what if bundle has an Immunization and an Observation?
 
-      #binding.pry
-
       assert bundle.type == "collection", "bundle.type shall be collection"
-      #binding.pry
       if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) }
         #bundle is an Immunization Bundle
         validate_vaccination_bundle(bundle)
@@ -64,7 +48,6 @@ module SHCVaccinationTestKit
     end
 
     def validate_vaccination_bundle(bundle)
-      #binding.pry
       patient_entry_counter = 0
       immunization_entry_counter = 0
       bundle.entry.each do |vaccination_bundle_entry|
@@ -74,6 +57,9 @@ module SHCVaccinationTestKit
             profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-patient-us-ad'
           )
           patient_entry_counter += 1
+          scratch[:shc_patient_us_ad_resources] ||= {}
+          scratch[:shc_patient_us_ad_resources][:all] ||= []
+          scratch[:shc_patient_us_ad_resources][:all] << vaccination_bundle_entry.resource
         else
           #for a vaccination bundle, if the entry is not a Patient, then it must be an Immunization
           assert vaccination_bundle_entry.resource.is_a?(FHIR::Immunization),
@@ -84,14 +70,19 @@ module SHCVaccinationTestKit
             profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad'
           )
           immunization_entry_counter += 1
+          scratch[:immunization_resources] ||= {}
+          scratch[:immunization_resources][:all] ||= []
+          scratch[:immunization_resources][:all] << vaccination_bundle_entry.resource
         end
       end
       assert patient_entry_counter == 1, "Expected vaccination bundle to have exactly 1 patient but found #{patient_entry_counter}"
       assert immunization_entry_counter > 0, "Expected vaccination bundle to have at least 1 immunization but found #{immunization_entry_counter}"
+      scratch[:shc_vaccination_bundle_ad_resources] ||= {}
+      scratch[:shc_vaccination_bundle_ad_resources][:all] ||= []
+      scratch[:shc_vaccination_bundle_ad_resources][:all] << bundle
     end
 
     def validate_labs_bundle(bundle)
-      #binding.pry
       patient_entry_counter = 0
       lab_result_entry_counter = 0
       bundle.entry.each do |vaccination_bundle_entry|
@@ -101,6 +92,9 @@ module SHCVaccinationTestKit
             profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-patient-us-ad'
           )
           patient_entry_counter += 1
+          scratch[:shc_patient_us_ad_resources] ||= {}
+          scratch[:shc_patient_us_ad_resources][:all] ||= []
+          scratch[:shc_patient_us_ad_resources][:all] << vaccination_bundle_entry.resource
         else
           #for a labs bundle, if the entry is not a Patient, then it must be a lab result (Observation)
           assert vaccination_bundle_entry.resource.is_a?(FHIR::Observation)
@@ -109,10 +103,16 @@ module SHCVaccinationTestKit
             profile_url: 'http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-infectious-disease-laboratory-result-observation-ad'
           )
           lab_result_entry_counter += 1
+          scratch[:shc_infectious_disease_laboratory_result_observation_ad_resources] ||= {}
+          scratch[:shc_infectious_disease_laboratory_result_observation_ad_resources][:all] ||= []
+          scratch[:shc_infectious_disease_laboratory_result_observation_ad_resources][:all] << vaccination_bundle_entry.resource
         end
       end
       assert patient_entry_counter == 1
       assert lab_result_entry_counter > 0
+      scratch[:shc_infectious_disease_laboratory_bundle_ad_resources] ||= {}
+      scratch[:shc_infectious_disease_laboratory_bundle_ad_resources][:all] ||= []
+      scratch[:shc_infectious_disease_laboratory_bundle_ad_resources][:all] << bundle
     end
 
     #TODO: this method was copied from smart-health-cards-test-kit. Should use the method in the ruby gem, but when I call...

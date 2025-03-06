@@ -1,0 +1,55 @@
+---
+:name: shc_vaccination_ad
+:class_name: ShcVaccinationAdSequence
+:version: v1.0.0
+:reformatted_version: v100
+:resource: Immunization
+:profile_url: http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad
+:profile_name: Vaccination Profile - Allowable Data
+:profile_version: 1.0.0
+:title: Vaccination - Allowable Data
+:short_description: Verify support for the server capabilities required by the Vaccination
+  Profile - Allowable Data.
+:must_supports:
+  :extensions: []
+  :slices: []
+  :elements:
+  - :path: meta
+  - :path: meta.security
+  - :path: status
+    :fixed_value: completed
+  - :path: vaccineCode
+  - :path: vaccineCode.coding
+  - :path: patient
+    :types:
+    - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-patient-general-ad
+  - :path: occurrence[x]
+  - :path: lotNumber
+  - :path: performer
+  - :path: performer.actor
+    :types:
+    - Reference
+  - :path: performer.actor.display
+  - :path: isSubpotent
+:mandatory_elements:
+- Immunization.status
+- Immunization.vaccineCode
+- Immunization.vaccineCode.coding
+- Immunization.vaccineCode.coding.system
+- Immunization.patient
+- Immunization.patient.reference
+- Immunization.occurrence[x]
+- Immunization.manufacturer.identifier.system
+- Immunization.manufacturer.identifier.value
+- Immunization.performer.actor
+- Immunization.performer.actor.display
+- Immunization.protocolApplied.doseNumber[x]
+:tests:
+- :id: v100_shc_immunization_ad_must_support_test
+  :file_name: shc_immunization_ad_must_support_test.rb
+- :id: v100_shc_immunization_ad_validation_test
+  :file_name: shc_immunization_ad_validation_test.rb
+:id: v100_shc_immunization_ad
+:file_name: shc_immunization_ad_group.rb

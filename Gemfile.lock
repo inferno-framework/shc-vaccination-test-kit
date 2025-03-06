@@ -3,7 +3,7 @@ PATH
   specs:
     shc_vaccination_test_kit (0.3.0)
       inferno_core (~> 0.6.4)
-      smart_health_cards_test_kit (= 0.10.0)
+      smart_health_cards_test_kit (= 0.10.1)
 
 GEM
   remote: https://rubygems.org/
@@ -256,7 +256,7 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.19.0)
-    smart_health_cards_test_kit (0.10.0)
+    smart_health_cards_test_kit (0.10.1)
       inferno_core (>= 0.6.4)
       rqrcode
       rqrcode_core (>= 1.2.0)
