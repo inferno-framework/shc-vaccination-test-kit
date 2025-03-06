@@ -1,16 +1,9 @@
 PATH
-  remote: ../../smart-health-cards-test-kit
-  specs:
-    smart_health_cards_test_kit (0.10.0)
-      inferno_core (>= 0.6.4)
-      rqrcode
-      rqrcode_core (>= 1.2.0)
-
-PATH
   remote: .
   specs:
     shc_vaccination_test_kit (0.3.0)
       inferno_core (~> 0.6.4)
+      smart_health_cards_test_kit (= 0.10.1)
 
 GEM
   remote: https://rubygems.org/
@@ -263,6 +256,10 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.19.0)
+    smart_health_cards_test_kit (0.10.1)
+      inferno_core (>= 0.6.4)
+      rqrcode
+      rqrcode_core (>= 1.2.0)
     sqlite3 (1.7.3-arm64-darwin)
     sqlite3 (1.7.3-x86_64-darwin)
     sqlite3 (1.7.3-x86_64-linux)
@@ -307,7 +304,6 @@ DEPENDENCIES
   rack-test
   rspec (~> 3.10)
   shc_vaccination_test_kit!
-  smart_health_cards_test_kit!
   webmock (~> 3.11)
 
 BUNDLED WITH
