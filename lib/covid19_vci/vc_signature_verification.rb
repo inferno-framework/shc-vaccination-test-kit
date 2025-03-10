@@ -1,5 +1,8 @@
+require_relative 'health_card'
+
 module Covid19VCI
   class VCSignatureVerification < Inferno::Test
+    include HealthCard
     title 'Verifiable Credential signatures can be verified'
     input :credential_strings
 
@@ -8,16 +11,15 @@ module Covid19VCI
     run do
       skip_if credential_strings.blank?, 'No Verifiable Credentials received'
       credential_strings.split(',').each do |credential|
-        card = HealthCards::HealthCard.from_jws(credential)
-        iss = card.issuer
-
         jws = HealthCards::JWS.from_jws(credential)
+        payload = payload_from_jws(jws)
+        iss = payload['iss']
 
         assert iss.present?, 'Credential contains no `iss`'
         warning { assert iss.start_with?('https://'), "`iss` SHALL use the `https` scheme: #{iss}" }
         assert !iss.end_with?('/'), "`iss` SHALL NOT include a trailing `/`: #{iss}"
 
-        key_set_url = "#{card.issuer}/.well-known/jwks.json"
+        key_set_url = "#{iss}/.well-known/jwks.json"
 
         get(key_set_url)
 
@@ -63,6 +65,7 @@ module Covid19VCI
         rescue StandardError => e
           assert false, "Error decoding credential: #{e.message}"
         end
+
       end
     end
   end
