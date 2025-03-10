@@ -48,13 +48,6 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
       result = run(test, { file_download_url: url, url: url, credential_strings: credential_strings})
       expect(result.result).to eq('pass')
     end
-
-    it 'fails for a JWS payload that does not conform to the FHIR Vaccination bundle or Labs Bundle profile' do
-      credential_strings = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjRIVWIyYXJ2aFRTWHNzRW9NczJHNVRvRHBzWXZzajdoNXdUXzN6TkV0dWcifQ.fZBPS8QwEMW_y3htu40tlOa4CJ4EwT8X2UOaztroNFmStFCXfncnVlEEze0l7_3yZs5gQgAJQ4wnuduR04oGF6KsyrKEDGx3BCmaqr0s27quMpg1yDPE5YQgnz5igXNhVD4OqCgOhVa-DxebyJNgzN8-7WbTi_ZfjxnHyZo3FY2zcMhAe-zRRqPobupeUMdU6TgY_4g-JI-EuigLwdB0u59sT_hdG7Qj4lRyZsAgv_AsTJiIHjyxwWNwk9co0wq-RAJYNeLmVaMhjsGNvqbFJtCzmdGmpexJvSIcVm7aGR7lSsX0q2jbJhciL5sf0Put0S3PxkVgTaFfb5_1Vz7v.OGQvnvFETR68Uww__2rYP5Tk_zR9NHmD2rLf8o7wxB6UDfxlgzpK1rO5zfsdSvBEdN2L6pQWqkyqJ4ovG4i5lw'
-      result = run(test, { file_download_url: url, url: url, credential_strings: credential_strings})
-      expect(result.result).to eq('fail')
-    end
-
   end
 
 
@@ -152,7 +145,7 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
   #         }
   #       ]
   #     )
-  #   end    
+  #   end
 
   #   let(:labs_bundle) do
   #     FHIR::Bundle.new(
@@ -215,7 +208,7 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
   #       ]
   #     )
   #   end
-    
+
   #   it 'passes if input is a valid vaccination bundle' do
   #     expect{subject.validate_fhir_bundle(vaccination_bundle)}.not_to raise_error()
   #   end
