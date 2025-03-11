@@ -3,7 +3,7 @@ PATH
   specs:
     shc_vaccination_test_kit (0.4.0)
       inferno_core (~> 0.6.4)
-      smart_health_cards_test_kit (~> 0.10.0)
+      smart_health_cards_test_kit (~> 0.10.1)
 
 GEM
   remote: https://rubygems.org/

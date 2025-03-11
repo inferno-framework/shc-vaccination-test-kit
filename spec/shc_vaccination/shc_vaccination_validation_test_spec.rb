@@ -31,6 +31,90 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
         sessionId: 'b8cf5547-1dc7-4714-a797-dc2347b93fe2'
       }
     end
+    let(:fhir_bundle_corrina_rowe) do
+      FHIR::Bundle.new(
+        type: 'collection',
+        entry: [
+          {
+            fullUrl: 'resource:0',
+            resource: FHIR::Patient.new(
+              name: [
+                {
+                  family: 'Rowe',
+                  given: ['Corrina']
+                }
+              ],
+              birthDate: '1971-12-06',
+              resourceType: 'Patient'
+            )
+          },
+          {
+            fullUrl: 'resource:1',
+            resource: FHIR::Immunization.new(
+              status: 'completed',
+              vaccineCode: {
+                coding: [
+                  {
+                    system: 'http://hl7.org/fhir/sid/cvx',
+                    code: '207'
+                  }
+                ]
+              },
+              patient: {
+                reference: 'resource:0'
+              },
+              occurrenceDateTime: '2025-02-05',
+              lotNumber: '1234567',
+              resourceType: 'Immunization'
+            )
+          }
+        ],
+        resourceType: 'Bundle'
+      )
+    end
+    let (:fhir_bundle_deanne_gleichner) do
+      FHIR::Bundle.new(
+        type: 'collection',
+        entry: [
+          {
+            fullUrl: 'resource:0',
+            resource: FHIR::Patient.new(
+              name: [
+                {
+                  family: 'Gleichner',
+                  given: [
+                    'Deanne'
+                  ]
+                }
+              ],
+              birthDate: '2007-04-11',
+              resourceType: 'Patient'
+            )
+          },
+          {
+            fullUrl: 'resource:1',
+            resource: FHIR::Immunization.new(
+              status: 'completed',
+              vaccineCode: {
+                coding: [
+                  {
+                    system: 'http://hl7.org/fhir/sid/cvx',
+                    code: '210'
+                  }
+                ]
+              },
+              patient: {
+                reference: 'resource:0'
+              },
+              occurrenceDateTime: '2025-02-04',
+              lotNumber: '1234567',
+              resourceType: 'Immunization'
+            )
+          }
+        ],
+        resourceType: 'Bundle'
+      )
+    end
 
     before do
       stub_request(:post, "https://example.com/validatorapi/validate")
@@ -38,187 +122,20 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
     end
 
     it 'passes if the JWS payload conforms to the FHIR Vaccination Bundle profile' do
-      credential_strings = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjRIVWIyYXJ2aFRTWHNzRW9NczJHNVRvRHBzWXZzajdoNXdUXzN6TkV0dWcifQ.1ZPNbtswEITfZXuVLFKyY0jHJIf0EhRI2kvhA0WtLQb8MUhKiBvo3buUU8RI4h6KoEB0ozg7nPkoPYEKARroY9w3RaGdFLp3ITYVYwwysO0WGr6u6rJcsXqdwSiheYJ42CM0P-exQHPBCB97FDr2Cyl8F74cF3lakM15nXSj6nj9V40yZrDql4jKWdhkID12aKMS-m5oH1DGFGnbK_8DfUiaBpYLtuBkmt5eDrbT-BIbpNOappIyAzLyB-pCDoPW370mgcfgBi-xSQj-LJKBFQaPWmGUpjG4dVokm50a0SYkN-hb2EwUs1XU41rEdCSvV2XO6pxdnDjeH-N8o2KUAqYpezcEfxUiRBGHMPcwe40RE-FRSKksXrlu1kjXKbubo4ZDiGhe7rjX64XzuyKhKYLqCjk-koGcJ6HkDKbNlMH-ORWZedyiR5tOP0VDIifl4Oet1PNemdmClaucUd2KbLWLt4Np0ScIZbVcXazfEvh6esHnMJT_FwP_GAw858sPxVB91q-h_EcMmzeC5x96ouc3.tLGLHXF-6J-RJf-FjvR-L8I759Cberj1wk6EqGO6U7Tn87wtbexzyhE5NfUDoVav6hxKZmcDhE40_9Zu1RcVGw'
-      result = run(test, { file_download_url: url, url: url, credential_strings: credential_strings})
+      fhir_bundles = [ fhir_bundle_corrina_rowe ].to_json
+      result = run(test, { file_download_url: url, url: url, fhir_bundles: fhir_bundles})
       expect(result.result).to eq('pass')
     end
 
     it 'passes if the JWS payload conforms to the FHIR Labs Bundle profile' do
-      credential_strings = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjRIVWIyYXJ2aFRTWHNzRW9NczJHNVRvRHBzWXZzajdoNXdUXzN6TkV0dWcifQ.hZLLboMwEEX_ZbolxEBesEy7b9Wm3VRZGDMEV8aObIOURvx7x6FNo6gPhGQNvnN95pojSOeggMb7fTGdKiO4aozzRcYYgwh0WUORLLM8y5aLfBZBL6A4gj_sEYrXU5ujPtdy6xvkyjex4LZyN2MxCQXZ_K4TppdVkv-pkW3bafnOvTQathEIixVqL7l66so3FD4g1Y20L2hd0BQwi1mckGn4uu50pfAbG4RRirqCMgIysgeahRw6pZ6tIoFFZzorsAgRfBXBQPMWRy1vpaI2eOy0UbWrjPfSknone9QhmjX2aEmyHYi4lDTSHffh9CRfzieM3uWF-WYke6AZCQiGIfqRJ7nicZ77LtxfLTVXtClMddqgVerdCdUdnMf28o6lFrGxu7Mc8lnGFpMVDNshAvedqcUaLepw1mUmJMK6Dgn2GIbayJAKpCylqdIJy8i556rDW7LnpaKVPPb-HzCnTYtVLHVtpo4AznjpgmWrOWP5CHiV2X3p0PbjzzGEsK_2P69_oOcD.37Rz-Hx4UK4wTNR_VCeh0dhuXL2pe7csB6gV8IdsLOjtxymZLPUr9sWirEpaQ1UOkMxAKPz3HOKUz1Wuz1jxIw'
-      result = run(test, { file_download_url: url, url: url, credential_strings: credential_strings})
+      fhir_bundles = [ fhir_bundle_deanne_gleichner ].to_json
+      result = run(test, { file_download_url: url, url: url, fhir_bundles: fhir_bundles})
       expect(result.result).to eq('pass')
     end
+
+    it 'skips if the no FHIR bundles received' do
+      result = run(test, { file_download_url: url, url: url, fhir_bundles: [].to_json})
+      expect(result.result).to eq('skip')
+    end
   end
-
-
-
-  # describe 'validate_fhir_bundle_test' do
-  #   let(:subject) { SHCVaccinationTestKit::SHCVaccinationFHIRValidation.new }
-
-  #   let(:vaccination_bundle) do
-  #     FHIR::Bundle.new(
-  #       resourceType: 'Bundle',
-  #       type: 'collection',
-  #       entry: [
-  #         {
-  #           fullUrl: 'resource:0',
-  #           resource: FHIR::Patient.new(
-  #             resourceType: 'Patient',
-  #             name: [
-  #               {
-  #                 family: 'Anyperson',
-  #                 given: ['Jane', 'C.']
-  #               }
-  #             ],
-  #             birthDate: '1961-01-20'
-  #           )
-  #         },
-  #         {
-  #           fullUrl: 'resource:1',
-  #           resource: FHIR::Immunization.new(
-  #             resourceType: 'Immunization',
-  #             meta: {
-  #               security: [
-  #                 {
-  #                   system: 'https://smarthealth.cards/ial',
-  #                   code: 'IAL2'
-  #                 }
-  #               ]
-  #             },
-  #             status: 'completed',
-  #             vaccineCode: {
-  #               coding: [
-  #                 {
-  #                   system: 'http://hl7.org/fhir/sid/cvx',
-  #                   code: '206'
-  #                 }
-  #               ]
-  #             },
-  #             patient: {
-  #               reference: 'resource:0'
-  #             },
-  #             occurrenceDateTime: '2022-08-01',
-  #             lotNumber: '0000002',
-  #             performer: [
-  #               {
-  #                 actor: {
-  #                   display: 'ABC General Hospital'
-  #                 }
-  #               }
-  #             ]
-  #           )
-  #         },
-  #         {
-  #           fullUrl: 'resource:2',
-  #           resource: FHIR::Immunization.new(
-  #             resourceType: 'Immunization',
-  #             meta: {
-  #               security: [
-  #                 {
-  #                   system: 'https://smarthealth.cards/ial',
-  #                   code: 'IAL2'
-  #                 }
-  #               ]
-  #             },
-  #             status: 'completed',
-  #             vaccineCode: {
-  #               coding: [
-  #                 {
-  #                   system: 'http://hl7.org/fhir/sid/cvx',
-  #                   code: '206'
-  #                 }
-  #               ]
-  #             },
-  #             patient: {
-  #               reference: 'resource:0'
-  #             },
-  #             occurrenceDateTime: '2022-08-29',
-  #             lotNumber: '0000003',
-  #             performer: [
-  #               {
-  #                 actor: {
-  #                   display: 'ABC General Hospital'
-  #                 }
-  #               }
-  #             ]
-  #           )
-  #         }
-  #       ]
-  #     )
-  #   end
-
-  #   let(:labs_bundle) do
-  #     FHIR::Bundle.new(
-  #       resourceType: 'Bundle',
-  #       type: 'collection',
-  #       entry: [
-  #         {
-  #           fullUrl: 'resource:0',
-  #           resource: FHIR::Patient.new(
-  #             resourceType: 'Patient',
-  #             name: [
-  #               {
-  #                 family: 'Anyperson',
-  #                 given: ['James', 'T.']
-  #               }
-  #             ],
-  #             birthDate: '1951-01-20'
-  #           )
-  #         },
-  #         {
-  #           fullUrl: 'resource:1',
-  #           resource: FHIR::Observation.new(
-  #             resourceType: 'Observation',
-  #             meta: {
-  #               security: [
-  #                 {
-  #                   system: 'https://smarthealth.cards/ial',
-  #                   code: 'IAL2'
-  #                 }
-  #               ]
-  #             },
-  #             status: 'final',
-  #             code: {
-  #               coding: [
-  #                 {
-  #                   system: 'http://loinc.org',
-  #                   code: '94558-4'
-  #                 }
-  #               ]
-  #             },
-  #             subject: {
-  #               reference: 'resource:0'
-  #             },
-  #             effectiveDateTime: '2021-02-17',
-  #             performer: [
-  #               {
-  #                 display: 'ABC General Hospital'
-  #               }
-  #             ],
-  #             valueCodeableConcept: {
-  #               coding: [
-  #                 {
-  #                   system: 'http://snomed.info/sct',
-  #                   code: '260373001'
-  #                 }
-  #               ]
-  #             }
-  #           )
-  #         }
-  #       ]
-  #     )
-  #   end
-
-  #   it 'passes if input is a valid vaccination bundle' do
-  #     expect{subject.validate_fhir_bundle(vaccination_bundle)}.not_to raise_error()
-  #   end
-
-  #   it 'passes if input is a valid labs bundle' do
-  #     expect{subject.validate_fhir_bundle(labs_bundle)}.not_to raise_error()
-  #   end
-
-  #   #TODO: test that an invalid input will fail for all all bundle types
-
-  # end
-
 end

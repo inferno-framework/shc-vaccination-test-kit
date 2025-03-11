@@ -9,29 +9,18 @@ module SHCVaccinationTestKit
     description %(
       SMART Health Card (SHC) for vaccination records payload SHALL be a valid FHIR Bundle resource
     )
-    input :credential_strings
+    input :fhir_bundles
 
     run do
+      skip_if fhir_bundles.blank?, 'No FHIR bundles received'
 
-      skip_if credential_strings.blank?, 'No Verifiable Credentials received'
+      assert_valid_json(fhir_bundles)
+      bundle_array = JSON.parse(fhir_bundles)
 
-      credential_strings.split(',').each do |credential|
+      skip_if bundle_array.blank?, 'No FHIR bundles received'
 
-        jws = SmartHealthCardsTestKit::Utils::JWS.from_jws(credential)
-        payload = payload_from_jws(jws)
-
-        vc = payload['vc']
-        assert vc.is_a?(Hash), "Expected 'vc' claim to be a JSON object, but found #{vc.class}"
-
-        subject = vc['credentialSubject']
-        assert subject.is_a?(Hash), "Expected 'vc.credentialSubject' to be a JSON object, but found #{subject.class}"
-
-        raw_bundle = subject['fhirBundle']
-        assert raw_bundle.is_a?(Hash), "Expected 'vc.fhirBundle' to be a JSON object, but found #{raw_bundle.class}"
-
-        bundle = FHIR::Bundle.new(raw_bundle)
-
-        validate_fhir_bundle(bundle)
+      bundle_array.each do |bundle|
+        validate_fhir_bundle(FHIR::Bundle.new(bundle))
       end
     end
 
