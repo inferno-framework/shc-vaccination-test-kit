@@ -20,32 +20,12 @@ module SHCVaccinationTestKit
     ].freeze
 
     fhir_resource_validator do
-      igs('igs/cards.smarthealth.terminology-0.1.0.tgz', 'igs/shc-vaccination-1.0.0-updated.tgz')
+      igs('igs/hl7.fhir.uv.smarthealthcards-vaccination-0.5.0-rc.tgz')
 
       exclude_message do |message|
         VALIDATION_MESSAGE_FILTERS.any? { |filter| filter.match? message.message }
       end
     end
-
-    scan_qr_code_html = File.read(File.join(__dir__, './shc_vaccination_test_kit/views/scan_qr_code.html'))
-    scan_qr_code_html_route_handler = proc { [200, { 'Content-Type' => 'text/html' }, [scan_qr_code_html]] }
-    route(:get, '/scan_qr_code', scan_qr_code_html_route_handler)
-
-    qr_scanner_route_handler = proc { [200, { 'Content-Type' => 'text/javascript' }, [qr_scanner]] }
-    route(:get, '/qr-scanner.min.js', qr_scanner_route_handler)
-
-    qr_scanner_worker = File.read(File.join(__dir__, './shc_vaccination_test_kit/javascript/qr-scanner-worker.min.js'))
-    qr_scanner_worker_route_handler = proc { [200, { 'Content-Type' => 'text/javascript' }, [qr_scanner_worker]] }
-    route(:get, '/qr-scanner-worker.min.js', qr_scanner_worker_route_handler)
-
-    js_qr = File.read(File.join(__dir__, './shc_vaccination_test_kit/javascript/jsQR.js'))
-    js_qr_route_handler = proc { [200, { 'Content-Type' => 'text/javascript' }, [js_qr]] }
-    route(:get, '/jsqr.js', js_qr_route_handler)
-
-    upload_html = File.read(File.join(__dir__, './shc_vaccination_test_kit/views/upload_qr_code.html'))
-    upload_html_route_handler = proc { [200, { 'Content-Type' => 'text/html' }, [upload_html]] }
-    route(:get, '/upload_qr_code', upload_html_route_handler)
-
 
     # Tests and TestGroups
     # SmartHealthCardsTestKit::SmartHealthCardsTestSuite.groups.each do |group|
@@ -66,6 +46,5 @@ module SHCVaccinationTestKit
 
     add_shc_group :shc_file_download_group
     add_shc_group :shc_fhir_operation_group
-    add_shc_group :shc_qr_code_group
   end
 end
