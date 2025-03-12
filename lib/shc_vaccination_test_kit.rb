@@ -9,7 +9,7 @@ module SHCVaccinationTestKit
     description %(
       This test suite evaluates the ability of a system to provide
       access to [SMART Health Cards Vaccination and Testing](https://hl7.org/fhir/uv/shc-vaccination/2021Sep/index.html)
-      resources via file download, HL7® FHIR® API, or QR Scanning.
+      resources via file download, or HL7® FHIR® API.
     )
     source_code_url('https://github.com/inferno-framework/shc-vaccination-test-kit')
     download_url('https://github.com/inferno-framework/shc-vaccination-test-kit/releases')
