@@ -8,6 +8,14 @@ RSpec.describe SHCVaccinationTestKit::MustSupportTest do
   let(:request_repo) { Inferno::Repositories::Requests.new }
   let(:group) { suite.groups.first.groups.find { |g| g.id.include?('shc_vaccination-Group01-shc_must_support_group')} }
 
+  before do
+    if described_class.respond_to?(:parent) && described_class.parent.nil?
+      allow(described_class).to receive(:suite).and_return(suite)
+    end
+  rescue NameError
+    raise StandardError, "No suite id defined. Add `let(:suite_id) { 'your_suite_id' }` to the spec"
+  end
+
   def run(runnable, inputs = {})
     test_run_params = { test_session_id: test_session.id }.merge(runnable.reference_hash)
     test_run = Inferno::Repositories::TestRuns.new.create(test_run_params)
