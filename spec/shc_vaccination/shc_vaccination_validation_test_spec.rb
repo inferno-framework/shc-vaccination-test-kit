@@ -32,6 +32,7 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
         sessionId: 'b8cf5547-1dc7-4714-a797-dc2347b93fe2'
       }
     end
+
     let(:fhir_bundle_example) do
       FHIR::Bundle.new(
           resourceType: "Bundle",
@@ -80,6 +81,91 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
               }
             )
           }]
+      )
+    end
+
+    let(:fhir_bundle_corrina_rowe) do
+      FHIR::Bundle.new(
+        type: 'collection',
+        entry: [
+          {
+            fullUrl: 'resource:0',
+            resource: FHIR::Patient.new(
+              name: [
+                {
+                  family: 'Rowe',
+                  given: ['Corrina']
+                }
+              ],
+              birthDate: '1971-12-06',
+              resourceType: 'Patient'
+            )
+          },
+          {
+            fullUrl: 'resource:1',
+            resource: FHIR::Immunization.new(
+              status: 'completed',
+              vaccineCode: {
+                coding: [
+                  {
+                    system: 'http://hl7.org/fhir/sid/cvx',
+                    code: '207'
+                  }
+                ]
+              },
+              patient: {
+                reference: 'resource:0'
+              },
+              occurrenceDateTime: '2025-02-05',
+              lotNumber: '1234567',
+              resourceType: 'Immunization'
+            )
+          }
+        ],
+        resourceType: 'Bundle'
+      )
+    end
+    let (:fhir_bundle_deanne_gleichner) do
+      FHIR::Bundle.new(
+        type: 'collection',
+        entry: [
+          {
+            fullUrl: 'resource:0',
+            resource: FHIR::Patient.new(
+              name: [
+                {
+                  family: 'Gleichner',
+                  given: [
+                    'Deanne'
+                  ]
+                }
+              ],
+              birthDate: '2007-04-11',
+              resourceType: 'Patient'
+            )
+          },
+          {
+            fullUrl: 'resource:1',
+            resource: FHIR::Immunization.new(
+              status: 'completed',
+              vaccineCode: {
+                coding: [
+                  {
+                    system: 'http://hl7.org/fhir/sid/cvx',
+                    code: '210'
+                  }
+                ]
+              },
+              patient: {
+                reference: 'resource:0'
+              },
+              occurrenceDateTime: '2025-02-04',
+              lotNumber: '1234567',
+              resourceType: 'Immunization'
+            )
+          }
+        ],
+        resourceType: 'Bundle'
       )
     end
 
@@ -262,5 +348,9 @@ RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
       expect(test_scratch[:shc_infectious_disease_laboratory_bundle_ad_resources][:all]).not_to include(immunization_bundle_example)
     end
 
+    it 'skips if the no FHIR bundles received' do
+      result = run(test, { file_download_url: url, url: url, fhir_bundles: [].to_json})
+      expect(result.result).to eq('skip')
+    end
   end
 end
