@@ -3,7 +3,7 @@ require_relative 'version'
 module SHCVaccinationTestKit
   class Metadata < Inferno::TestKit
     id :shc_vaccination_test_kit
-    title 'SMART Health Cards: Vaccination and Testing'
+    title 'SMART Health Cards: Vaccination and Testing Test Kit'
     description <<~DESCRIPTION
       The SMART Health Cards Vaccination: Vaccination and Testing Test Kit provides an
       executable set of tests for the [SMART Health Cards: Vaccinations and Testing Implementation Guide v0.5.0-rc](https://www.hl7.org/fhir/uv/shc-vaccination/2021Sep/). This test kit

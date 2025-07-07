@@ -25,6 +25,8 @@ module SHCVaccinationTestKit
     end
 
     def validate_fhir_bundle(bundle)
+      # assert bundle.entry.any? { |r| r.resource.is_a?(FHIR::Immunization) } || bundle.entry.any? { |r| r.resource.is_a?(FHIR::Observation) },
+      # "Bundle must have either Immunization entries or Observation entries"
 
       #begin new code FI-3622
 
@@ -138,15 +140,26 @@ module SHCVaccinationTestKit
       decompressed_payload_length = decompressed_payload.length
 
       warning do
-        assert raw_payload_length <= decompressed_payload_length,
-              "Payload may not be properly minified. Received a payload with length #{raw_payload_length}, " \
-              "but was able to generate a payload with length #{decompressed_payload_length}"
+        assert_valid_resource(
+          resource: bundle,
+          profile_url: 'http://hl7.org/fhir/uv/smarthealthcards-vaccination/StructureDefinition/vaccination-credential-bundle-dm'
+        )
       end
+      # end
 
-      assert_valid_json decompressed_payload, 'Payload is not valid JSON'
+      if bundle.entry.any? { |r| r.resource.is_a?(FHIR::Observation) }
+        assert_valid_resource(
+          resource: bundle,
+          profile_url: 'http://hl7.org/fhir/uv/smarthealthcards-vaccination/StructureDefinition/covid19-laboratory-bundle'
+        )
 
-      JSON.parse(decompressed_payload)
+        warning do
+          assert_valid_resource(
+            resource: bundle,
+            profile_url: 'http://hl7.org/fhir/uv/smarthealthcards-vaccination/StructureDefinition/covid19-laboratory-bundle-dm'
+          )
+        end
+      end
     end
-
   end
 end
