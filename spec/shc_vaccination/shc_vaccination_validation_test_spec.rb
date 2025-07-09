@@ -2,8 +2,6 @@ require_relative '../../lib/shc_vaccination_test_kit/shc_vaccination_validation_
 
 RSpec.describe SHCVaccinationTestKit::SHCVaccinationFHIRValidation do
   let(:suite_id) { 'shc_vaccination' }
-  # let(:group) { suite.groups.first }
-  # let(:request_repo) { Inferno::Repositories::Requests.new }
 
   describe 'health_card_fhir_validation_test' do
     let(:test) { find_test suite, 'shc_vaccination_validation_test' }
