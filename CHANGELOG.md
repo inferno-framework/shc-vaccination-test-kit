@@ -1,3 +1,6 @@
+# 0.5.0
+* FI-3815: Update Test Kit with new RSpec features by @Shaumik-Ashraf in https://github.com/inferno-framework/shc-vaccination-test-kit/pull/28
+
 # 0.4.0
 * Ruby Version Update: Upgraded Ruby to 3.3.6.
 * Inferno Core Update: Bumped to version 0.6.4.
